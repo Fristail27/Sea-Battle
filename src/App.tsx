@@ -8,12 +8,13 @@ import NewPasswordPage from './pages/newPasswordPage/NewPasswordPage';
 import PasswordRecoveryPage from './pages/passwordRecoveryPage/PasswordRecoveryPage';
 import TestPage from "./pages/testPage/TestPage";
 import Error404 from "./pages/error404/Error404";
+import Main from './pages/main/Main';
 
 function App() {
   return (
     <div className="App">
       <Switch>
-        {/*<Route exact path={"/"} render={()=> <h1>Main</h1>}/>*/}
+        <Route exact path={"/"} render={()=> <Main/>}/>
         <Route path={"/login"} render={()=><Login/>}/>
         <Route path={"/registration"} render={()=><Registration/>}/>
         <Route path={"/profile"} render={()=><Profile/>}/>
