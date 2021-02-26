@@ -1,0 +1,35 @@
+.lab {
+    display: flex;
+    align-items: center;
+}
+.checkbox {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: 4px;
+    border: 1px solid #d6d6cd;
+    width: 18px;
+    height: 19px;
+    cursor: pointer;
+    position: relative;
+}
+.checkbox::before {
+    content: "🗸";
+    color: #35cf15;
+    font-size: 27px;
+    position: absolute;
+    right: 50%;
+    bottom: 50%;
+    transform: translate(50%, 50%);
+    opacity: 0;
+    transition: .1s ease-in;
+}
+.checkbox:checked::before {
+    opacity: 1;
+}
+
+.spanClassName {
+    display: inline-block;
+    font-size: 21px;
+    padding-bottom: 6px;
+}

@@ -1,24 +1,28 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import {Redirect, Route, Switch } from 'react-router-dom';
+import Login from "./pages/login/Login";
+import Registration from "./pages/registration/Registration";
+import Profile from "./pages/profile/Profile";
+import NewPasswordPage from './pages/newPasswordPage/NewPasswordPage';
+import PasswordRecoveryPage from './pages/passwordRecoveryPage/PasswordRecoveryPage';
+import TestPage from "./pages/testPage/TestPage";
+import Error404 from "./pages/error404/Error404";
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Switch>
+        {/*<Route exact path={"/"} render={()=> <h1>Main</h1>}/>*/}
+        <Route path={"/login"} render={()=><Login/>}/>
+        <Route path={"/registration"} render={()=><Registration/>}/>
+        <Route path={"/profile"} render={()=><Profile/>}/>
+        <Route path={"/new-password-page"} render={()=><NewPasswordPage/>}/>
+        <Route path={"/password-recovery-page"} render={()=><PasswordRecoveryPage/>}/>
+        <Route path={'/test-page'} render={ () => <TestPage/> }/>
+        <Route path={'/error404'} render={ () => <Error404/> }/>
+        <Redirect from={ '*' } to={'/error404'}/>
+      </Switch>
     </div>
   );
 }
