@@ -2,14 +2,14 @@ import {applyMiddleware, combineReducers, createStore } from "redux";
 import { appReducer } from "./app-Reducer";
 import { authReducer } from "./auth-Reducer";
 import thunkMiddleware from 'redux-thunk'
+import { passwordRecoveryReducer } from "./passwordRecovery-Reducer";
 
 
 const rootReducer = combineReducers({
     app: appReducer,
     auth: authReducer,
+    pass: passwordRecoveryReducer,
 })
-
-// сразу добавляю middleware для использования redux-thunk
 
 export const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
 

@@ -7,13 +7,14 @@ const instance = axios.create({
     baseURL: baseURL,
 })
 
-
 export const passwordRecoveryAPI = {
-    sendEmailForChangePassword () {
+    sendEmailForChangePassword(mail: string) {
         return instance.post('auth/forgot', {
-            email: "fristail27@gmail.com",
-            from: "3234423  <solder272@gmail.com>",
-            message: "<div>21343</div>"
+            email: mail,
+            from: "Fristail27  <Fristail27@gmail.com>",
+            message: `<div style=\"background-color: lime; padding: 15px\">
+                            password recovery link: <a href='http://localhost:3000/#/set-new-password/$token$'>link</a>
+                      </div>`
         })
     }
 }
