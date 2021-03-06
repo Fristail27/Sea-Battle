@@ -1,18 +1,9 @@
-import React from "react";
+.registrationModule {
 
-
-const Registration = () => {
-    return (
-        <div className={s.registrationModule}>
-            <h1>Registration</h1>
-            <form>
-                <input className='email' name="email" placeholder="Email" type={"email"}/>
-                <input data-validate-length="6,8" name="password"  placeholder="Password" type={"password"}/>
-                <input data-validate-length="6,8" name="password"  placeholder="Repeat password" type={"password"}/>
-                <button>Register</button>
-            </form>
-        </div>
-    )
 }
 
-export default Registration
+.registrationForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
