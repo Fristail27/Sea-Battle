@@ -2,11 +2,13 @@ import {applyMiddleware, combineReducers, createStore } from "redux";
 import { appReducer } from "./app-Reducer";
 import { authReducer } from "./auth-Reducer";
 import thunkMiddleware from 'redux-thunk'
+import {regReducer} from "./reg-Reducer";
 
 
 const rootReducer = combineReducers({
     app: appReducer,
     auth: authReducer,
+    reg: regReducer
 })
 
 // сразу добавляю middleware для использования redux-thunk

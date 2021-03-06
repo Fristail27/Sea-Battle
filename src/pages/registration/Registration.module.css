@@ -7,3 +7,22 @@
     flex-direction: column;
     align-items: center;
 }
+
+.registrationForm input {
+    margin-top: 20px;
+}
+.registrationForm button {
+    margin-top: 20px;
+}
+.registrationForm a {
+    margin-top: 20px;
+}
+
+.inputErr {
+    color: red;
+    position: absolute
+}
+
+.error {
+    border: 2px solid red;
+}
