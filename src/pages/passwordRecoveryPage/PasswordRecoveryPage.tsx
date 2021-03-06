@@ -38,12 +38,13 @@ const PasswordRecoveryPage = () => {
             dispatch(setErrorStatusForPassRecAC(null))
         }
     }
-    const errorStyle = (emailValid && touched) ? {border: "2px solid red"} : null
+    const errorStyle = (emailValid && touched) ? {border: "2px solid red"} : {}
+
     return (
         <div>
             <h1>Password Recovery Page</h1>
             {status !== "none" && <span>{status}</span>}
-            <input onFocus={()=> setTouched(true)} style={errorStyle as any} onBlur={onBlurHandler} value={value} onChange={onChangeHandler}/>
+            <input onFocus={()=> setTouched(true)} style={errorStyle} onBlur={onBlurHandler} value={value} onChange={onChangeHandler}/>
             <button onClick={clickHandler}>Send email</button>
             {errorStatus && <p style={{color:"red"}}>{errorStatus}</p>}
         </div>
