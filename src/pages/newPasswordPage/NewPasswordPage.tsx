@@ -1,6 +1,6 @@
 import React, {ChangeEvent} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {Redirect, useParams} from "react-router-dom";
 import {AppRootStateType} from "../../store/store";
 import {
     onChangeInputPassAC,
@@ -13,6 +13,7 @@ import {
 const NewPasswordPage = () => {
 
     const dispatch = useDispatch()
+    const [redirect, setRedirect] = React.useState<boolean>(false)
     const errorStatus = useSelector<AppRootStateType, string | null>(state => state.pass.errorStatusForNewPass)
     const valuePass = useSelector<AppRootStateType, string>(state => state.pass.valueInputPass)
     const valuePassRepeat = useSelector<AppRootStateType, string>(state => state.pass.valueInputPassRec)
@@ -40,11 +41,13 @@ const NewPasswordPage = () => {
             dispatch(setErrorStatusForNewPassAC("Пароли не совпадают"))
         } else {
             if (token) {dispatch(sendPassForNewPassTC(valuePass, token))}
+            setRedirect(true)
         }
     }
 
     return (
         <div>
+            {redirect && <Redirect to={"/"}/>}
             <h1>New Password Page</h1>
             {status !== "none" && <span>{status}</span>}
             <label style={{display: "block"}}><input value={valuePass} onChange={onChangeHandlerPass} type="text"/>Password</label>
