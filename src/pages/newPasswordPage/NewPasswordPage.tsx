@@ -7,7 +7,7 @@ import {
     onChangeInputPassRecAC,
     onChangeStatusNewPassAC,
     sendPassForNewPassTC,
-    setErrorStatusForNewPassAC, setErrorStatusForPassRecAC
+    setErrorStatusForNewPassAC
 } from "../../store/passwordRecovery-Reducer";
 import {validations} from "../../utils/validations/validations";
 
@@ -96,8 +96,7 @@ const NewPasswordPage = () => {
             <label style={{display: "block"}}><input onBlur={onBlurHandlerPassRepeat}
                                                      onFocus={() => setTouchedPassRepeat(true)}
                                                      style={errorStylePassRepeat} value={valuePassRepeat}
-                                                     onChange={onChangeHandlerPassRepeat} type="text"/>repeat
-                Password</label>
+                                                     onChange={onChangeHandlerPassRepeat} type="text"/>repeat Password</label>
             {errorStatus && <span style={{color: "red"}}>{errorStatus}</span>}
             <button onClick={clickHandler}>Change Pass</button>
         </div>
