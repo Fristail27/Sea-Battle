@@ -18,7 +18,7 @@ function App() {
         <Route path={"/login"} render={()=><Login/>}/>
         <Route path={"/registration"} render={()=><Registration/>}/>
         <Route path={"/profile"} render={()=><Profile/>}/>
-        <Route path={"/new-password-page"} render={()=><NewPasswordPage/>}/>
+        <Route path={"/new-password-page/:token"} render={()=><NewPasswordPage/>}/>
         <Route path={"/password-recovery-page"} render={()=><PasswordRecoveryPage/>}/>
         <Route path={'/test-page'} render={ () => <TestPage/> }/>
         <Route path={'/error404'} render={ () => <Error404/> }/>
