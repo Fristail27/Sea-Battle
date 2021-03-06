@@ -9,6 +9,7 @@ import {
     sendPassForNewPassTC,
     setErrorStatusForNewPassAC
 } from "../../store/passwordRecovery-Reducer";
+import {validations} from "../../utils/validations/validations";
 
 const NewPasswordPage = () => {
 
@@ -21,33 +22,29 @@ const NewPasswordPage = () => {
     const {token} = useParams<{ token?: string }>();
 
     const onChangeHandlerPass = (e: ChangeEvent<HTMLInputElement>) => {
-        if (errorStatus) {
-            dispatch(setErrorStatusForNewPassAC(null))
-        }
+        if (errorStatus) {dispatch(setErrorStatusForNewPassAC(null))}
         dispatch(onChangeInputPassAC(e.currentTarget.value))
     }
     const onChangeHandlerPassRepeat = (e: ChangeEvent<HTMLInputElement>) => {
-        if (errorStatus) {
-            dispatch(setErrorStatusForNewPassAC(null))
-        }
-        if (status !== "none") {
-            dispatch(onChangeStatusNewPassAC("none"))
-        }
+        if (errorStatus) {dispatch(setErrorStatusForNewPassAC(null))}
+        if (status !== "none") {dispatch(onChangeStatusNewPassAC("none"))}
         dispatch(onChangeInputPassRecAC(e.currentTarget.value))
     }
 
     const clickHandler = () => {
         if (valuePass !== valuePassRepeat) {
             dispatch(setErrorStatusForNewPassAC("Пароли не совпадают"))
+        } else if (validations.passValid(valuePass)) {
+            dispatch(setErrorStatusForNewPassAC("Длина пароля должна быть больше 7 символов"))
         } else {
             if (token) {dispatch(sendPassForNewPassTC(valuePass, token))}
-            setRedirect(true)
+            if (status === "success") {setRedirect(true)}
         }
     }
 
     return (
         <div>
-            {redirect && <Redirect to={"/"}/>}
+            {redirect && <Redirect to={"/login"}/>}
             <h1>New Password Page</h1>
             {status !== "none" && <span>{status}</span>}
             <label style={{display: "block"}}><input value={valuePass} onChange={onChangeHandlerPass} type="text"/>Password</label>

@@ -133,8 +133,13 @@ export const sendEmailForRecoveryPassTC = (mail: string) => async (dispatch: Dis
         dispatch(onChangeInputAC(""))
         dispatch(onChangeStatusPassRecAC("success"))
     } catch (err) {
-        dispatch(setErrorStatusForPassRecAC(err.response.data.error))
-        dispatch(onChangeStatusPassRecAC("none"))
+        if (err.response) {
+            dispatch(setErrorStatusForPassRecAC(err.response.data.error))
+            dispatch(onChangeStatusPassRecAC("none"))
+        } else {
+            dispatch(setErrorStatusForPassRecAC(err.message))
+            dispatch(onChangeStatusPassRecAC("none"))
+        }
     }
 }
 export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<OnChangeInputPassActionType | onChangeInputPassRecActionType | SetErrorStatusForNewPassActionType | OnChangeStatusNewPassActionType>) => {
@@ -143,11 +148,16 @@ export const sendPassForNewPassTC = (pass: string, token: string) => async (disp
         await passwordRecoveryAPI.sendNewPassword(pass, token)
         dispatch(onChangeInputPassAC(""))
         dispatch(onChangeInputPassRecAC(""))
-        dispatch(onChangeStatusNewPassAC("none"))
+        dispatch(onChangeStatusNewPassAC("success"))
 
     } catch (err) {
-        dispatch(setErrorStatusForNewPassAC(err.response.data.error))
-        dispatch(onChangeStatusNewPassAC("none"))
+        if (err.response) {
+            dispatch(setErrorStatusForNewPassAC(err.response.data.error))
+            dispatch(onChangeStatusNewPassAC("none"))
+        } else {
+            dispatch(setErrorStatusForNewPassAC(err.message))
+            dispatch(onChangeStatusNewPassAC("none"))
+        }
     }
 }
 
