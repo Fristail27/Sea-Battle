@@ -3,6 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {onChangeInputAC, onChangeStatusPassRecAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
 import {AppRootStateType} from "../../store/store";
 import {validations} from "../../utils/validations/validations";
+import {Preloader} from "../common/preloader/Preloader";
 
 
 const PasswordRecoveryPage = () => {
@@ -47,6 +48,7 @@ const PasswordRecoveryPage = () => {
             <input onFocus={()=> setTouched(true)} style={errorStyle} onBlur={onBlurHandler} value={value} onChange={onChangeHandler}/>
             <button onClick={clickHandler}>Send email</button>
             {errorStatus && <p style={{color:"red"}}>{errorStatus}</p>}
+            <Preloader/>
         </div>
     )
 }
