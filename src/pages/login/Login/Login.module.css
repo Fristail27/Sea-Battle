@@ -1,0 +1,9 @@
+.formLogin button {
+    cursor: pointer;
+}
+.elementInput {
+    margin: 5px;
+}
+.elementInput span {
+    margin-right: 5px;
+}
