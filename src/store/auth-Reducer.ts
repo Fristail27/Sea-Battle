@@ -61,7 +61,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         case AUTH_TRY:
             return {
                 ...state,
-                ...action.userData
+                userData: action.userData
 
             }
         case LOGIN_SUCCESS:

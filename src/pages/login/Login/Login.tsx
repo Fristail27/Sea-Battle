@@ -9,6 +9,7 @@ type LoginPropsType ={
     email: string
     password: string
     check: boolean
+
 }
 
 export const Login = (props: LoginPropsType) => {
@@ -30,7 +31,7 @@ export const Login = (props: LoginPropsType) => {
                 </div>
                 <button onClick={props.onSubm} type={"submit"} >Login</button>
             </form>
-        </div>
 
+        </div>
     )
 }
