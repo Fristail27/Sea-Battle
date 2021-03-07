@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import {Redirect, Route, Switch } from 'react-router-dom';
-import Login from "./pages/login/Login";
 import Registration from "./pages/registration/Registration";
 import Profile from "./pages/profile/Profile";
 import NewPasswordPage from './pages/newPasswordPage/NewPasswordPage';
@@ -9,13 +8,14 @@ import PasswordRecoveryPage from './pages/passwordRecoveryPage/PasswordRecoveryP
 import TestPage from "./pages/testPage/TestPage";
 import Error404 from "./pages/error404/Error404";
 import Main from './pages/main/Main';
+import LoginContainer from "./pages/login/LoginContainer";
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route exact path={"/"} render={()=> <Main/>}/>
-        <Route path={"/login"} render={()=><Login/>}/>
+        <Route path={"/login"} render={()=><LoginContainer/>}/>
         <Route path={"/registration"} render={()=><Registration/>}/>
         <Route path={"/profile"} render={()=><Profile/>}/>
         <Route path={"/new-password-page/:token"} render={()=><NewPasswordPage/>}/>
