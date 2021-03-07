@@ -3,13 +3,16 @@ import {Login} from "./Login/Login";
 import {connect, useDispatch} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {authenticationUserLoginTC, UserDataType} from "../../store/auth-Reducer";
+import { Redirect } from "react-router-dom";
 
 type LoginContainerPropsType = {
  user:UserDataType
+    loginSuccess: boolean
 }
 
 const LoginContainer = (props: LoginContainerPropsType) => {
     const dispatch = useDispatch()
+
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
@@ -26,6 +29,9 @@ const LoginContainer = (props: LoginContainerPropsType) => {
     const onSubm = () => {
         dispatch(authenticationUserLoginTC({email, password, rememberMe}))
     }
+    if(props.loginSuccess) {
+        return <Redirect to={"./profile"}/>
+    }
 
     return (
         <Login
@@ -41,7 +47,10 @@ const LoginContainer = (props: LoginContainerPropsType) => {
 }
 
 const mstp = (state: AppRootStateType) => {
-    return {user: state.auth}
+    return {
+        user: state.auth.userData,
+        loginSuccess: state.auth.loginSuccess
+    }
 }
 
 export default connect(mstp, {})(LoginContainer)
