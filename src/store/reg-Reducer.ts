@@ -1,4 +1,4 @@
-import {DataType, regAPI} from "../API/registration-api";
+import {DataType, regAPI} from "../api/registration-api";
 import {Dispatch} from "react";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'

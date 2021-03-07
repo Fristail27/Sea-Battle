@@ -1,5 +1,5 @@
 import {Dispatch} from "react";
-import {authAPI, userRequestData} from "../API/authApi";
+import {authAPI, userRequestData} from "../api/authApi";
 
 const initialState = {
     userData: {
