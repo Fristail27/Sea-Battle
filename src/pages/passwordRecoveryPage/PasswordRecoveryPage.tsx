@@ -1,9 +1,10 @@
 import React, {ChangeEvent} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {onChangeInputAC, onChangeStatusPassRecAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
+import {onChangeInputAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
 import {AppRootStateType} from "../../store/store";
 import {validations} from "../../utils/validations/validations";
 import {Preloader} from "../common/preloader/Preloader";
+import {onChangeAppStatusAC} from "../../store/app-Reducer";
 
 
 const PasswordRecoveryPage = () => {
@@ -11,7 +12,7 @@ const PasswordRecoveryPage = () => {
     const value = useSelector<AppRootStateType, string>(state => state.pass.valueOfInputEmail)
     const emailValid =  validations.emailValid(value)
     const errorStatus = useSelector<AppRootStateType, string|null>(state => state.pass.errorStatusForPassRec)
-    const status = useSelector<AppRootStateType, string>(state => state.pass.statusForPassRec)
+    const statusApp = useSelector<AppRootStateType, string>(state => state.app.appStatus)
     const [touched, setTouched] = React.useState<boolean>(false)
 
     const clickHandler = ()=> {
@@ -24,8 +25,8 @@ const PasswordRecoveryPage = () => {
         if (errorStatus) {
             dispatch(setErrorStatusForPassRecAC(null))
         }
-        if (status !== "none") {
-            dispatch(onChangeStatusPassRecAC("none"))
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
         }
         if (touched) {
             setTouched(false)
@@ -35,6 +36,7 @@ const PasswordRecoveryPage = () => {
         if (emailValid) {
             dispatch(setErrorStatusForPassRecAC("Некоректный Email"))
             setTouched(true)
+            dispatch(onChangeAppStatusAC("idle"))
         } else {
             dispatch(setErrorStatusForPassRecAC(null))
         }
@@ -44,11 +46,11 @@ const PasswordRecoveryPage = () => {
     return (
         <div>
             <h1>Password Recovery Page</h1>
-            {status !== "none" && <span>{status}</span>}
             <input onFocus={()=> setTouched(true)} style={errorStyle} onBlur={onBlurHandler} value={value} onChange={onChangeHandler}/>
-            <button onClick={clickHandler}>Send email</button>
+            <button disabled={statusApp === "loading"} onClick={clickHandler}>Send email</button>
             {errorStatus && <p style={{color:"red"}}>{errorStatus}</p>}
-            <Preloader/>
+            {statusApp ==="loading" && <Preloader/>}
+            {statusApp === "succeeded" && <span style={{color:"green"}}>{statusApp}</span>}
         </div>
     )
 }

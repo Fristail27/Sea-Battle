@@ -1,7 +1,6 @@
 import {passwordRecoveryAPI} from "../api/PasswordRecoveryAPI";
 import {Dispatch} from "react";
-
-type StatusForRequestType = "none" | "loading" | "success"
+import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 
 const initialState = {
     valueOfInputEmail: "" as string,
@@ -9,8 +8,6 @@ const initialState = {
     errorStatusForNewPass: null as string | null,
     valueInputPass: "" as string,
     valueInputPassRec: "" as string,
-    statusForNewPass: "none" as StatusForRequestType,
-    statusForPassRec: "none" as StatusForRequestType,
 }
 
 const ON_CHANGE_INPUT_EMAIL = "passwordRecovery/ON_CHANGE_INPUT_EMAIL"
@@ -18,8 +15,7 @@ const SET_ERROR_STATUS_FOR_PASS_REC = "passwordRecovery/SET_ERROR_STATUS_FOR_PAS
 const SET_ERROR_STATUS_FOR_NEW_PASS = "passwordRecovery/SET_ERROR_STATUS_FOR_NEW_PASS"
 const ON_CHANGE_INPUT_PASS = "passwordRecovery/ON_CHANGE_INPUT_PASS"
 const ON_CHANGE_INPUT_PASS_REC = "passwordRecovery/ON_CHANGE_INPUT_PASS_REC"
-const ON_CHANGE_STATUS_NEW_PASS = "passwordRecovery/ON_CHANGE_STATUS_NEW_PASS"
-const ON_CHANGE_STATUS_PASS_REC = "passwordRecovery/ON_CHANGE_STATUS_PASS_REC"
+
 
 type InitialStateType = typeof initialState
 
@@ -43,22 +39,12 @@ type onChangeInputPassRecActionType = {
     type: typeof ON_CHANGE_INPUT_PASS_REC
     value: string
 }
-type OnChangeStatusNewPassActionType = {
-    type: typeof ON_CHANGE_STATUS_NEW_PASS
-    status: StatusForRequestType
-}
-type OnChangeStatusPassRecActionType = {
-    type: typeof ON_CHANGE_STATUS_PASS_REC
-    status: StatusForRequestType
-}
 type ActionsType =
     OnChangeInputActionType
     | SetErrorStatusForPassRecActionType
     | SetErrorStatusForNewPassActionType
     | OnChangeInputPassActionType
     | onChangeInputPassRecActionType
-    | OnChangeStatusNewPassActionType
-    | OnChangeStatusPassRecActionType
 
 export const passwordRecoveryReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -87,16 +73,6 @@ export const passwordRecoveryReducer = (state: InitialStateType = initialState, 
                 ...state,
                 valueInputPassRec: action.value
             }
-        case ON_CHANGE_STATUS_NEW_PASS:
-            return {
-                ...state,
-                statusForNewPass: action.status
-            }
-        case ON_CHANGE_STATUS_PASS_REC:
-                return {
-                    ...state,
-                    statusForPassRec: action.status
-                }
         default:
             return state
     }
@@ -117,46 +93,42 @@ export const onChangeInputPassRecAC = (value: string): onChangeInputPassRecActio
     type: ON_CHANGE_INPUT_PASS_REC,
     value
 })
-export const onChangeStatusNewPassAC = (status: StatusForRequestType): OnChangeStatusNewPassActionType => ({
-    type: ON_CHANGE_STATUS_NEW_PASS,
-    status
-})
-export const onChangeStatusPassRecAC = (status: StatusForRequestType): OnChangeStatusPassRecActionType => ({
-    type: ON_CHANGE_STATUS_PASS_REC,
-    status
-})
+
 //thunks
-export const sendEmailForRecoveryPassTC = (mail: string) => async (dispatch: Dispatch<OnChangeInputActionType | SetErrorStatusForPassRecActionType | OnChangeStatusPassRecActionType>) => {
+export const sendEmailForRecoveryPassTC = (mail: string) => async (
+    dispatch: Dispatch<OnChangeInputActionType | SetErrorStatusForPassRecActionType | OnChangeAppStatusActionType>
+) => {
     try {
-        dispatch(onChangeStatusPassRecAC("loading"))
+        dispatch(onChangeAppStatusAC("loading"))
         await passwordRecoveryAPI.sendEmailForChangePassword(mail)
         dispatch(onChangeInputAC(""))
-        dispatch(onChangeStatusPassRecAC("success"))
+        dispatch(onChangeAppStatusAC("succeeded"))
     } catch (err) {
         if (err.response) {
             dispatch(setErrorStatusForPassRecAC(err.response.data.error))
-            dispatch(onChangeStatusPassRecAC("none"))
+            dispatch(onChangeAppStatusAC("failed"))
         } else {
             dispatch(setErrorStatusForPassRecAC(err.message))
-            dispatch(onChangeStatusPassRecAC("none"))
+            dispatch(onChangeAppStatusAC("failed"))
         }
     }
 }
-export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<OnChangeInputPassActionType | onChangeInputPassRecActionType | SetErrorStatusForNewPassActionType | OnChangeStatusNewPassActionType>) => {
+export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<OnChangeInputPassActionType | onChangeInputPassRecActionType | SetErrorStatusForNewPassActionType | OnChangeAppStatusActionType>
+) => {
     try {
-        dispatch(onChangeStatusNewPassAC("loading"))
+        dispatch(onChangeAppStatusAC("loading"))
         await passwordRecoveryAPI.sendNewPassword(pass, token)
         dispatch(onChangeInputPassAC(""))
         dispatch(onChangeInputPassRecAC(""))
-        dispatch(onChangeStatusNewPassAC("success"))
+        dispatch(onChangeAppStatusAC("succeeded"))
 
     } catch (err) {
         if (err.response) {
             dispatch(setErrorStatusForNewPassAC(err.response.data.error))
-            dispatch(onChangeStatusNewPassAC("none"))
+            dispatch(onChangeAppStatusAC("failed"))
         } else {
             dispatch(setErrorStatusForNewPassAC(err.message))
-            dispatch(onChangeStatusNewPassAC("none"))
+            dispatch(onChangeAppStatusAC("failed"))
         }
     }
 }

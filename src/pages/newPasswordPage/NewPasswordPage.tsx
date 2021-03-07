@@ -5,13 +5,14 @@ import {AppRootStateType} from "../../store/store";
 import {
     onChangeInputPassAC,
     onChangeInputPassRecAC,
-    onChangeStatusNewPassAC,
     sendPassForNewPassTC,
     setErrorStatusForNewPassAC
 } from "../../store/passwordRecovery-Reducer";
 import {validations} from "../../utils/validations/validations";
+import {onChangeAppStatusAC} from "../../store/app-Reducer";
+import {Preloader} from "../common/preloader/Preloader";
 
-const NewPasswordPage = () => {
+const NewPasswordPage:React.FC = () => {
 
     const dispatch = useDispatch()
     const [redirect, setRedirect] = React.useState<boolean>(false)
@@ -22,7 +23,7 @@ const NewPasswordPage = () => {
     const passValid = validations.passValid(valuePass)
     const valuePassRepeat = useSelector<AppRootStateType, string>(state => state.pass.valueInputPassRec)
     const passRepeatValid = validations.passValid(valuePassRepeat)
-    const status = useSelector<AppRootStateType, string>(state => state.pass.statusForNewPass)
+    const statusApp = useSelector<AppRootStateType, string>(state => state.app.appStatus)
     const {token} = useParams<{ token?: string }>();
 
     const onChangeHandlerPass = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,8 +40,8 @@ const NewPasswordPage = () => {
         if (errorStatus) {
             dispatch(setErrorStatusForNewPassAC(null))
         }
-        if (status !== "none") {
-            dispatch(onChangeStatusNewPassAC("none"))
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
         }
         if (touchedPass || touchedPassRepeat) {
             setTouchedPass(false)
@@ -58,8 +59,9 @@ const NewPasswordPage = () => {
             if (token) {
                 dispatch(sendPassForNewPassTC(valuePass, token))
             }
-            if (status === "success") {
+            if (statusApp === "succeeded") {
                 setRedirect(true)
+                dispatch(onChangeAppStatusAC("idle"))
             }
         }
     }
@@ -89,7 +91,6 @@ const NewPasswordPage = () => {
         <div>
             {redirect && <Redirect to={"/login"}/>}
             <h1>New Password Page</h1>
-            {status !== "none" && <span>{status}</span>}
             <label style={{display: "block"}}><input onBlur={onBlurHandlerPass} onFocus={() => setTouchedPass(true)}
                                                      style={errorStylePass} value={valuePass}
                                                      onChange={onChangeHandlerPass} type="text"/>Password</label>
@@ -98,7 +99,9 @@ const NewPasswordPage = () => {
                                                      style={errorStylePassRepeat} value={valuePassRepeat}
                                                      onChange={onChangeHandlerPassRepeat} type="text"/>repeat Password</label>
             {errorStatus && <span style={{color: "red"}}>{errorStatus}</span>}
-            <button onClick={clickHandler}>Change Pass</button>
+            <button disabled={statusApp === "loading"} onClick={clickHandler}>Change Pass</button>
+            {statusApp ==="loading" && <Preloader/>}
+            {statusApp === "succeeded" && <span style={{color:"green"}}>{statusApp}</span>}
         </div>
     )
 }

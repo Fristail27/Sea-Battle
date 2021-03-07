@@ -7,7 +7,7 @@ const initialState = {
 }
 
 type InitialStateType = typeof initialState
-type OnChangeAppStatusActionType = {
+export type OnChangeAppStatusActionType = {
     type: typeof ON_CHANGE_APP_STATUS
     status: RequestStatusType
 }
