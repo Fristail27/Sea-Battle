@@ -1,5 +1,5 @@
 import s from "./Input.module.css";
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 
 type EmailInputPropsType = {
     email: string
@@ -16,16 +16,17 @@ export const EmailInput: React.FC<EmailInputPropsType> = ({email, onChange}) => 
         }
     }
     const onMailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        onChange(e.currentTarget.value)
+    }
+    useEffect(()=> {
+        onChange(email)
+        if(email) {
         if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
             setEmailErr('Invalid email address')
         } else {
             setEmailErr('')
-        }
-        onChange(e.currentTarget.value)
-        console.log(emailErr)
-        console.log(email)
-
-    }
+        }}
+    }, [email])
 
     return (
         <div>
