@@ -1,52 +1,39 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {onChangeInputAC, onChangeStatusPassRecAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
+import {onChangeInputAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC, StatusForRequestType
+} from "../../store/passwordRecovery-Reducer";
 import {AppRootStateType} from "../../store/store";
 import {validations} from "../../utils/validations/validations";
-
+import {EmailInput} from "../../common/EmailInput";
+import {Button} from "../../common/Button";
+import s from "../registration/Registration.module.css";
+import {PassInput} from "../../common/PassInput";
+import {NavLink} from "react-router-dom";
 
 const PasswordRecoveryPage = () => {
     const dispatch = useDispatch()
     const value = useSelector<AppRootStateType, string>(state => state.pass.valueOfInputEmail)
     const emailValid =  validations.emailValid(value)
     const errorStatus = useSelector<AppRootStateType, string|null>(state => state.pass.errorStatusForPassRec)
-    const status = useSelector<AppRootStateType, string>(state => state.pass.statusForPassRec)
-    const [touched, setTouched] = React.useState<boolean>(false)
+    const status = useSelector<AppRootStateType, StatusForRequestType>(state => state.pass.statusForPassRec)
 
     const clickHandler = ()=> {
         emailValid
             ? dispatch(setErrorStatusForPassRecAC("Некоректный Email"))
             : dispatch(sendEmailForRecoveryPassTC(value))
     }
-    const onChangeHandler = (e:ChangeEvent<HTMLInputElement>) => {
-        dispatch(onChangeInputAC(e.currentTarget.value))
-        if (errorStatus) {
-            dispatch(setErrorStatusForPassRecAC(null))
-        }
-        if (status !== "none") {
-            dispatch(onChangeStatusPassRecAC("none"))
-        }
-        if (touched) {
-            setTouched(false)
-        }
+    const onChangeHandler = (email: string) => {
+        dispatch(onChangeInputAC(email))
     }
-    const onBlurHandler = () => {
-        if (emailValid) {
-            dispatch(setErrorStatusForPassRecAC("Некоректный Email"))
-            setTouched(true)
-        } else {
-            dispatch(setErrorStatusForPassRecAC(null))
-        }
-    }
-    const errorStyle = (emailValid && touched) ? {border: "2px solid red"} : {}
 
     return (
         <div>
             <h1>Password Recovery Page</h1>
-            {status !== "none" && <span>{status}</span>}
-            <input onFocus={()=> setTouched(true)} style={errorStyle} onBlur={onBlurHandler} value={value} onChange={onChangeHandler}/>
-            <button onClick={clickHandler}>Send email</button>
-            {errorStatus && <p style={{color:"red"}}>{errorStatus}</p>}
+            <form className={s.registrationForm} onSubmit={(e) => e.preventDefault()}>
+                <EmailInput email={value} onChange={onChangeHandler}/>
+                <Button name={"Send email"} onClick={clickHandler} status={status}/>
+                {errorStatus && <p style={{color:"red"}}>{errorStatus}</p>}
+            </form>
         </div>
     )
 }

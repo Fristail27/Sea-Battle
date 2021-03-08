@@ -11,17 +11,18 @@ type LoginContainerPropsType = {
 }
 
 const LoginContainer = (props: LoginContainerPropsType) => {
+
     const dispatch = useDispatch()
 
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
 
-    const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmailText(e.currentTarget.value)
+    const emailHandler = (email: string) => {
+        setEmailText(email)
     }
-    const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setPasswordText(e.currentTarget.value)
+    const passwordHandler = (pass: string) => {
+        setPasswordText(pass)
     }
     const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked)

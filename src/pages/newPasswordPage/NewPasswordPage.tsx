@@ -40,7 +40,7 @@ const NewPasswordPage = () => {
             dispatch(setErrorStatusForNewPassAC(null))
         }
         if (status !== "none") {
-            dispatch(onChangeStatusNewPassAC("none"))
+            dispatch(onChangeStatusNewPassAC("idle"))
         }
         if (touchedPass || touchedPassRepeat) {
             setTouchedPass(false)

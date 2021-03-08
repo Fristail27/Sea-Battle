@@ -4,14 +4,14 @@ import {Dispatch} from "react";
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: 'idle' as RequestStatusType ,
+    status: 'idle' as RequestStatusType,
     succeedRegister: false,
-    error: undefined as string|undefined
+    error: undefined as string | undefined
 }
 
 type InitialStateType = typeof initialState
 
-type ActionsType = RegisterActionType|SetErrorActionType|SetStatusActionType
+type ActionsType = RegisterActionType | SetErrorActionType | SetStatusActionType
 
 export const regReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -62,7 +62,11 @@ export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType>) 
             }
         })
         .catch((err) => {
-            dispatch(setErrorAC(err.response.data.error))
             dispatch(setStatusAC("failed"))
+            if (err.response) {
+                dispatch(setErrorAC(err.response.data.error))
+            } else {
+                dispatch(setErrorAC(err.message))
+            }
         })
 }

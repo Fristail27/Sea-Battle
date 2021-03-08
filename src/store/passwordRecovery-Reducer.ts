@@ -1,7 +1,7 @@
 import {passwordRecoveryAPI} from "../api/PasswordRecoveryAPI";
 import {Dispatch} from "react";
 
-type StatusForRequestType = "none" | "loading" | "success"
+export type StatusForRequestType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     valueOfInputEmail: "" as string,
@@ -131,14 +131,14 @@ export const sendEmailForRecoveryPassTC = (mail: string) => async (dispatch: Dis
         dispatch(onChangeStatusPassRecAC("loading"))
         await passwordRecoveryAPI.sendEmailForChangePassword(mail)
         dispatch(onChangeInputAC(""))
-        dispatch(onChangeStatusPassRecAC("success"))
+        dispatch(onChangeStatusPassRecAC("succeeded"))
     } catch (err) {
         if (err.response) {
             dispatch(setErrorStatusForPassRecAC(err.response.data.error))
-            dispatch(onChangeStatusPassRecAC("none"))
+            dispatch(onChangeStatusPassRecAC("idle"))
         } else {
             dispatch(setErrorStatusForPassRecAC(err.message))
-            dispatch(onChangeStatusPassRecAC("none"))
+            dispatch(onChangeStatusPassRecAC("idle"))
         }
     }
 }
@@ -148,15 +148,15 @@ export const sendPassForNewPassTC = (pass: string, token: string) => async (disp
         await passwordRecoveryAPI.sendNewPassword(pass, token)
         dispatch(onChangeInputPassAC(""))
         dispatch(onChangeInputPassRecAC(""))
-        dispatch(onChangeStatusNewPassAC("success"))
+        dispatch(onChangeStatusNewPassAC("succeeded"))
 
     } catch (err) {
         if (err.response) {
             dispatch(setErrorStatusForNewPassAC(err.response.data.error))
-            dispatch(onChangeStatusNewPassAC("none"))
+            dispatch(onChangeStatusNewPassAC("idle"))
         } else {
             dispatch(setErrorStatusForNewPassAC(err.message))
-            dispatch(onChangeStatusNewPassAC("none"))
+            dispatch(onChangeStatusNewPassAC("idle"))
         }
     }
 }
