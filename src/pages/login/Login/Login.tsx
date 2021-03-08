@@ -4,7 +4,6 @@ import s from "../../registration/Registration.module.css";
 import {EmailInput} from "../../../common/EmailInput";
 import {PassInput} from "../../../common/PassInput";
 import {Button} from "../../../common/Button";
-import {NavLink} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
 import {RequestStatusType} from "../../../store/reg-Reducer";
@@ -18,7 +17,6 @@ type LoginPropsType = {
     email: string
     password: string
     check: boolean
-
 }
 
 export const Login = (props: LoginPropsType) => {
@@ -33,7 +31,7 @@ export const Login = (props: LoginPropsType) => {
                     <span>Remember me</span>
                     <input onChange={props.checkHandler} type="checkbox" checked={props.check}/>
                 </div>
-                <Button name={"Login"} onClick={props.onSubm} status={"idle"}/>
+                <Button name={"Login"} onClick={props.onSubm} status={statusApp}/>
             </form>
             {statusApp === "loading" && <Preloader/>}
         </div>

@@ -21,7 +21,10 @@ export const EmailInput: React.FC<EmailInputPropsType> = ({email, onChange}) => 
         } else {
             setEmailErr('')
         }
-        onChange(e.currentTarget.value.trim())
+        onChange(e.currentTarget.value)
+        console.log(emailErr)
+        console.log(email)
+
     }
 
     return (

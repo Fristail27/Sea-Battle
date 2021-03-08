@@ -22,7 +22,9 @@ export const PassInput: React.FC<PassInputPropsType> = ({password, onChange}) =>
             setPasswordErr('')
         }
         onChange(e.currentTarget.value.trim())
+        console.log(password)
     }
+
 
     return (
         <div>

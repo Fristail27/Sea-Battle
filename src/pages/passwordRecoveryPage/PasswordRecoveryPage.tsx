@@ -21,7 +21,6 @@ const PasswordRecoveryPage = () => {
     const emailValid =  validations.emailValid(value)
     const errorStatus = useSelector<AppRootStateType, string|null>(state => state.pass.errorStatusForPassRec)
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
-    const [touched, setTouched] = React.useState<boolean>(false)
 
     const clickHandler = ()=> {
         emailValid

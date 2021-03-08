@@ -7,11 +7,7 @@ import { Redirect } from "react-router-dom";
 import {onChangeAppStatusAC} from "../../store/app-Reducer";
 import {RequestStatusType} from "../../store/reg-Reducer";
 
-type LoginContainerPropsType = {
- user:UserDataType
-}
-
-const LoginContainer = (props: LoginContainerPropsType) => {
+const LoginContainer = () => {
 
     const dispatch = useDispatch()
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
