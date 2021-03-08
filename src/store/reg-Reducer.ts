@@ -62,7 +62,7 @@ export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType>) 
             }
         })
         .catch((err) => {
-            dispatch(setErrorAC(err.message))
+            dispatch(setErrorAC(err.response.data.error))
             dispatch(setStatusAC("failed"))
         })
 }
