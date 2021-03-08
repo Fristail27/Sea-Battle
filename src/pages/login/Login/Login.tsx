@@ -1,7 +1,11 @@
 import React, {ChangeEvent} from "react";
 import style from "./Login.module.css"
+import {useSelector} from "react-redux";
+import {AppRootStateType} from "../../../store/store";
+import {RequestStatusType} from "../../../store/reg-Reducer";
+import {Preloader} from "../../common/preloader/Preloader";
 
-type LoginPropsType ={
+type LoginPropsType = {
     emailHandler: (e: ChangeEvent<HTMLInputElement>) => void
     passwordHandler: (e: ChangeEvent<HTMLInputElement>) => void
     checkHandler: (e: ChangeEvent<HTMLInputElement>) => void
@@ -13,6 +17,7 @@ type LoginPropsType ={
 }
 
 export const Login = (props: LoginPropsType) => {
+    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     return (
         <div>
             <h1>Authentication</h1>
@@ -23,15 +28,16 @@ export const Login = (props: LoginPropsType) => {
                 </div>
                 <div className={style.elementInput}>
                     <span>Password</span>
-                    <input onChange={props.passwordHandler} type="password" placeholder="Entry password" value={props.password}/>
+                    <input onChange={props.passwordHandler} type="password" placeholder="Entry password"
+                           value={props.password}/>
                 </div>
                 <div className={style.elementInput}>
                     <span>Remember me</span>
                     <input onChange={props.checkHandler} type="checkbox" checked={props.check}/>
                 </div>
-                <button onClick={props.onSubm} type={"submit"} >Login</button>
+                <button onClick={props.onSubm} type={"submit"}>Login</button>
             </form>
-
+            {statusApp === "loading" && <Preloader/>}
         </div>
     )
 }

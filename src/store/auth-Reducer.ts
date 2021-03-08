@@ -1,5 +1,6 @@
 import {Dispatch} from "react";
 import {authAPI, userRequestData} from "../api/authApi";
+import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 
 const initialState = {
     userData: {
@@ -54,7 +55,7 @@ type InitialStateType = {
     isAuth: boolean
 }
 
-type ActionsType = ReturnType<typeof authTryAC> | ReturnType<typeof loginSuccessAC>
+type ActionsType = ReturnType<typeof authTryAC>
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch(action.type) {
@@ -62,14 +63,7 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
             return {
                 ...state,
                 userData: action.userData
-
             }
-        case LOGIN_SUCCESS:
-            return  {
-                ...state,
-                loginSuccess: action.loginSuccess
-            }
-
         default:
             return state
     }
@@ -79,38 +73,22 @@ type authTryACType = {
     type: typeof AUTH_TRY
     userData: UserDataType
 }
-export const authTryAC = (userData: UserDataType): authTryACType => {
-    return {
-        type: AUTH_TRY,
-        userData
-    } as const
-}
-
-type isAuthACType = {
-    type: typeof LOGIN_SUCCESS
-    loginSuccess: boolean
-}
-export const loginSuccessAC = (loginSuccess: boolean): isAuthACType => {
-    return {
-        type: LOGIN_SUCCESS,
-        loginSuccess
-    }as const
-}
+export const authTryAC = (userData: UserDataType): authTryACType => ({type: AUTH_TRY, userData})
 
 export const authenticationUserLoginTC = (data: userRequestData) =>
-    (dispatch: Dispatch<ActionsType>)=> {
+    (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType>)=> {
+        dispatch(onChangeAppStatusAC("loading"))
         authAPI.userAuthorization(data)
             .then((res) => {
                 if(!res.data.error) {
                     dispatch(authTryAC(res.data))
-                    dispatch(loginSuccessAC(true))
+                    dispatch(onChangeAppStatusAC("succeeded"))
                 }else {
-                    dispatch(loginSuccessAC(false))
+                    dispatch(onChangeAppStatusAC("failed"))
                 }
-
-
             })
             .catch((err) => {
                 const error = err.response ? err.response.data.error : (err.message + ", more details on console")
+                dispatch(onChangeAppStatusAC("failed"))
             })
     }

@@ -4,11 +4,13 @@ import s from "./Registration.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {registerTC, RequestStatusType} from "../../store/reg-Reducer";
+import {Preloader} from "../common/preloader/Preloader";
+import {onChangeAppStatusAC} from "../../store/app-Reducer";
 
 const Registration = () => {
     const dispatch = useDispatch()
     const succeedRegister = useSelector<AppRootStateType, boolean>(state => state.reg.succeedRegister)
-    const status = useSelector<AppRootStateType, RequestStatusType>(state => state.reg.status)
+    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     const error = useSelector<AppRootStateType, string | undefined>(state => state.reg.error)
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
@@ -23,6 +25,7 @@ const Registration = () => {
         } else {
             setEmailErr('')
         }
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
         setEmail(e.currentTarget.value)
     }
     const onPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,10 +34,12 @@ const Registration = () => {
         } else {
             setPasswordErr('')
         }
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
         setPassword(e.currentTarget.value)
     }
     const onRepeatPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRepeatPassword(e.currentTarget.value)
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
     }
     const onBlurEmail = () => {
         if (email === "") {
@@ -77,9 +82,10 @@ const Registration = () => {
                        placeholder="Repeat password" type={"password"}/>
                 {password !== repeatPassword ?
                     <div className={s.inputErr} style={{marginTop: "120px"}}>Different Password</div> : ""}
-                <button disabled={status === "loading"} onClick={onButtonClick}>Register</button>
+                <button disabled={statusApp === "loading"} onClick={onButtonClick}>Register</button>
                 {sendError && <div className={s.inputErr} style={{marginTop: "165px"}}>{sendError}</div>}
                 {error ? <div className={s.inputErr} style={{marginTop: "165px"}}>{error}</div> : null}
+                {statusApp ==="loading" && <Preloader/>}
                 <NavLink to={"/login"}>Sign in</NavLink>
             </form>
         </div>

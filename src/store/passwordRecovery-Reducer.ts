@@ -95,9 +95,7 @@ export const onChangeInputPassRecAC = (value: string): onChangeInputPassRecActio
 })
 
 //thunks
-export const sendEmailForRecoveryPassTC = (mail: string) => async (
-    dispatch: Dispatch<OnChangeInputActionType | SetErrorStatusForPassRecActionType | OnChangeAppStatusActionType>
-) => {
+export const sendEmailForRecoveryPassTC = (mail: string) => async (dispatch: Dispatch<OnChangeInputActionType | SetErrorStatusForPassRecActionType | OnChangeAppStatusActionType>) => {
     try {
         dispatch(onChangeAppStatusAC("loading"))
         await passwordRecoveryAPI.sendEmailForChangePassword(mail)
@@ -113,7 +111,11 @@ export const sendEmailForRecoveryPassTC = (mail: string) => async (
         }
     }
 }
-export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<OnChangeInputPassActionType | onChangeInputPassRecActionType | SetErrorStatusForNewPassActionType | OnChangeAppStatusActionType>
+export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<
+    OnChangeInputPassActionType |
+    onChangeInputPassRecActionType |
+    SetErrorStatusForNewPassActionType |
+    OnChangeAppStatusActionType>
 ) => {
     try {
         dispatch(onChangeAppStatusAC("loading"))

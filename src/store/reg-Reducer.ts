@@ -1,22 +1,20 @@
 import {DataType, regAPI} from "../api/registration-api";
 import {Dispatch} from "react";
+import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
-    status: 'idle' as RequestStatusType ,
     succeedRegister: false,
     error: undefined as string|undefined
 }
 
 type InitialStateType = typeof initialState
 
-type ActionsType = RegisterActionType|SetErrorActionType|SetStatusActionType
+type ActionsType = RegisterActionType|SetErrorActionType
 
 export const regReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case "reg/SET-STATUS":
-            return {...state, status: action.status}
         case "reg/SET-REGISTER":
             return {...state, succeedRegister: action.succeedRegister}
         case "reg/SET-ERROR":
@@ -26,12 +24,6 @@ export const regReducer = (state: InitialStateType = initialState, action: Actio
     }
 }
 
-const setStatusAC = (status: RequestStatusType) => {
-    return {
-        type: "reg/SET-STATUS",
-        status
-    } as const
-}
 const registerAC = (succeedRegister: boolean) => {
     return {
         type: "reg/SET-REGISTER",
@@ -45,24 +37,23 @@ const setErrorAC = (error: string) => {
     } as const
 }
 
-type SetStatusActionType = ReturnType<typeof setStatusAC>
 type RegisterActionType = ReturnType<typeof registerAC>
 type SetErrorActionType = ReturnType<typeof setErrorAC>
 
-export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType>) => {
-    dispatch(setStatusAC("loading"))
+export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType|OnChangeAppStatusActionType>) => {
+    dispatch(onChangeAppStatusAC("loading"))
     regAPI.register(data)
         .then((res) => {
             if (!res.data.error) {
                 dispatch(registerAC(true))
-                dispatch(setStatusAC("succeeded"))
+                dispatch(onChangeAppStatusAC("succeeded"))
             } else {
                 dispatch(setErrorAC(res.data.error))
-                dispatch(setStatusAC("failed"))
+                dispatch(onChangeAppStatusAC("failed"))
             }
         })
         .catch((err) => {
             dispatch(setErrorAC(err.message))
-            dispatch(setStatusAC("failed"))
+            dispatch(onChangeAppStatusAC("failed"))
         })
 }

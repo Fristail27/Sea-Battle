@@ -1,35 +1,39 @@
 import React, {ChangeEvent, useState} from "react";
 import {Login} from "./Login/Login";
-import {connect, useDispatch} from "react-redux";
+import {connect, useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {authenticationUserLoginTC, UserDataType} from "../../store/auth-Reducer";
 import { Redirect } from "react-router-dom";
+import {onChangeAppStatusAC} from "../../store/app-Reducer";
+import {RequestStatusType} from "../../store/reg-Reducer";
 
 type LoginContainerPropsType = {
  user:UserDataType
-    loginSuccess: boolean
 }
 
 const LoginContainer = (props: LoginContainerPropsType) => {
     const dispatch = useDispatch()
-
+    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
 
     const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setEmailText(e.currentTarget.value)
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
     }
     const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setPasswordText(e.currentTarget.value)
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
     }
     const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked)
+        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
     }
     const onSubm = () => {
         dispatch(authenticationUserLoginTC({email, password, rememberMe}))
     }
-    if(props.loginSuccess) {
+    if(statusApp==="succeeded") {
         return <Redirect to={"./profile"}/>
     }
 
@@ -48,8 +52,7 @@ const LoginContainer = (props: LoginContainerPropsType) => {
 
 const mstp = (state: AppRootStateType) => {
     return {
-        user: state.auth.userData,
-        loginSuccess: state.auth.loginSuccess
+        user: state.auth.userData
     }
 }
 
