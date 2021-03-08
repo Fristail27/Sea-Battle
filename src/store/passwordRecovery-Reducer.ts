@@ -1,6 +1,8 @@
 import {passwordRecoveryAPI} from "../api/PasswordRecoveryAPI";
 import {Dispatch} from "react";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
+export type StatusForRequestType = 'idle' | 'loading' | 'succeeded' | 'failed'
+
 
 const initialState = {
     valueOfInputEmail: "" as string,

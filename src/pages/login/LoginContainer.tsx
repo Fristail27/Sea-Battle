@@ -12,23 +12,30 @@ type LoginContainerPropsType = {
 }
 
 const LoginContainer = (props: LoginContainerPropsType) => {
+
     const dispatch = useDispatch()
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
 
-    const emailHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setEmailText(e.currentTarget.value)
-        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
+    const emailHandler = (email: string) => {
+        setEmailText(email)
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
+        }
     }
-    const passwordHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setPasswordText(e.currentTarget.value)
-        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
+    const passwordHandler = (pass: string) => {
+        setPasswordText(pass)
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
+        }
     }
     const checkHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRememberMe(e.currentTarget.checked)
-        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
+        }
     }
     const onSubm = () => {
         dispatch(authenticationUserLoginTC({email, password, rememberMe}))
