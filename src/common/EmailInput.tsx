@@ -14,19 +14,16 @@ export const EmailInput: React.FC<EmailInputPropsType> = ({email, onChange}) => 
         if (email.trim() === "") {
             setEmailErr('Email Required')
         }
+        if(email) {
+            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+                setEmailErr('Invalid email address')
+            } else {
+                setEmailErr('')
+            }}
     }
     const onMailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.currentTarget.value)
     }
-    useEffect(()=> {
-        onChange(email)
-        if(email) {
-        if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
-            setEmailErr('Invalid email address')
-        } else {
-            setEmailErr('')
-        }}
-    }, [email])
 
     return (
         <div>
