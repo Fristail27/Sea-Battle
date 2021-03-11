@@ -1,17 +1,12 @@
-import React, {ChangeEvent} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {onChangeInputAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC, StatusForRequestType
-} from "../../store/passwordRecovery-Reducer";
+import {onChangeInputAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
 import {AppRootStateType} from "../../store/store";
 import {EmailInput} from "../../common/EmailInput";
 import {Button} from "../../common/Button";
 import s from "../registration/Registration.module.css";
-import {PassInput} from "../../common/PassInput";
-import {NavLink} from "react-router-dom";
-//import {onChangeInputAC, sendEmailForRecoveryPassTC, setErrorStatusForPassRecAC} from "../../store/passwordRecovery-Reducer";
 import {validations} from "../../utils/validations/validations";
 import {Preloader} from "../common/preloader/Preloader";
-import {onChangeAppStatusAC} from "../../store/app-Reducer";
 import { RequestStatusType } from "../../store/auth-Reducer";
 
 

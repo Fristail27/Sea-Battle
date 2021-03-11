@@ -1,5 +1,5 @@
 import s from "./Input.module.css";
-import React, {ChangeEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 
 type EmailInputPropsType = {
     email: string

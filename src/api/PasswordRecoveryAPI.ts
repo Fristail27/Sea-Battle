@@ -21,7 +21,7 @@ export const passwordRecoveryAPI = {
         })
     },
     sendNewPassword (pass:string, token:string) {
-        return instanceLoc.post('auth/set-new-password', {
+        return instance.post('auth/set-new-password', {
             password: pass,
             resetPasswordToken: token
         })
