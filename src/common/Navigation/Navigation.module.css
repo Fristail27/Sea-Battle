@@ -1,0 +1,15 @@
+.wrapper {
+    width: 100%;
+    background-color: #2a2e73;
+    display: flex;
+}
+.wrapper a {
+    color: white;
+    text-decoration: none;
+    cursor: pointer;
+}
+.navigation {
+    width: 80%;
+    display: flex;
+    justify-content: space-around;
+}
