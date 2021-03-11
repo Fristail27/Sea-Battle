@@ -9,10 +9,12 @@ import TestPage from "./pages/testPage/TestPage";
 import Error404 from "./pages/error404/Error404";
 import Main from './pages/main/Main';
 import LoginContainer from "./pages/login/LoginContainer";
+import {Navigations} from "./common/Navigation/Navigation";
 
 function App() {
   return (
     <div className="App">
+      <Navigations/>
       <Switch>
         <Route exact path={"/"} render={()=> <Main/>}/>
         <Route path={"/login"} render={()=><LoginContainer/>}/>

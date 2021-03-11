@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {Login} from "./Login/Login";
 import {connect, useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
-import {authenticationUserLoginTC, UserDataType} from "../../store/auth-Reducer";
+import {authenticationUserLoginTC} from "../../store/auth-Reducer";
 import { Redirect } from "react-router-dom";
 import {onChangeAppStatusAC} from "../../store/app-Reducer";
 import {RequestStatusType} from "../../store/reg-Reducer";
@@ -15,7 +15,7 @@ const LoginContainer = () => {
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
 
-    const emailHandler = (email: string) => {
+    const emailHandler = (email: string) =>{
         setEmailText(email)
         if (statusApp !== "idle") {
             dispatch(onChangeAppStatusAC("idle"))

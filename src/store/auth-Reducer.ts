@@ -2,11 +2,11 @@ import {Dispatch} from "react";
 import {authAPI, userRequestData} from "../api/authApi";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 
-const initialState = {
+export const initialState = {
     userData: {
         _id: null,
         email: null,
-        name: "dsad",
+        name: null,
         avatar: null,
         publicCardPacksCount: null,
         created: null,
@@ -15,25 +15,15 @@ const initialState = {
         verified: null,
         rememberMe: null,
         error: null,
-        isAuth: null
+        isAuth: false
     },
+    isAuth: false,
     loginSuccess: false,
-    isAuth: false
 }
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-type appStatusType = {
-    status: RequestStatusType
-    error: string
-}
-const appStatus: appStatusType = {
-    status: "idle",
-    error: ""
-}
-
 const AUTH_TRY = "AUTH_TRY"
-const LOGIN_SUCCESS = "LOGIN_SUCCESS"
 
 export type UserDataType = {
     _id: string | null
@@ -51,8 +41,8 @@ export type UserDataType = {
 
 type InitialStateType = {
     userData: UserDataType,
-    loginSuccess: boolean,
     isAuth: boolean
+    loginSuccess: boolean,
 }
 
 type ActionsType = ReturnType<typeof authTryAC>
@@ -62,7 +52,8 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
         case AUTH_TRY:
             return {
                 ...state,
-                userData: action.userData
+                userData: action.userData,
+                isAuth: action.isAuth
             }
         default:
             return state
@@ -72,8 +63,9 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
 type authTryACType = {
     type: typeof AUTH_TRY
     userData: UserDataType
+    isAuth: boolean
 }
-export const authTryAC = (userData: UserDataType): authTryACType => ({type: AUTH_TRY, userData})
+export const authTryAC = (userData: UserDataType, isAuth: boolean): authTryACType => ({type: AUTH_TRY, userData, isAuth})
 
 export const authenticationUserLoginTC = (data: userRequestData) =>
     (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType>)=> {
@@ -81,9 +73,10 @@ export const authenticationUserLoginTC = (data: userRequestData) =>
         authAPI.userAuthorization(data)
             .then((res) => {
                 if(!res.data.error) {
-                    dispatch(authTryAC(res.data))
+                    dispatch(authTryAC(res.data, true))
                     dispatch(onChangeAppStatusAC("succeeded"))
                 }else {
+                    dispatch(authTryAC(initialState.userData, false))
                     dispatch(onChangeAppStatusAC("failed"))
                 }
             })
