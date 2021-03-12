@@ -4,7 +4,7 @@ import s from "./Registration.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {registerTC} from "../../store/reg-Reducer";
-import {Preloader} from "../common/preloader/Preloader";
+import {Preloader} from "../../common/preloader/Preloader";
 import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
 import {EmailInput} from "../../common/EmailInput";
 import {PassInput} from "../../common/PassInput";

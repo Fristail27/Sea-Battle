@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {Redirect, Route, Switch } from 'react-router-dom';
 import Registration from "./pages/registration/Registration";
@@ -10,8 +10,15 @@ import Error404 from "./pages/error404/Error404";
 import Main from './pages/main/Main';
 import {LoginContainer} from "./pages/login/LoginContainer";
 import {Navigations} from "./common/Navigation/Navigation";
+import {useDispatch} from "react-redux";
+import {meRequestTC} from "./store/auth-Reducer";
+
 
 function App() {
+    const dispatch = useDispatch()
+    useEffect(()=>{
+        dispatch(meRequestTC())
+    },[])
   return (
     <div className="App">
       <Navigations/>

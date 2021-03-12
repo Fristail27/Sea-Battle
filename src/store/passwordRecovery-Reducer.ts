@@ -1,8 +1,7 @@
 import {passwordRecoveryAPI} from "../api/PasswordRecoveryAPI";
-import {Dispatch} from "react";
+import {Dispatch} from "redux";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
-
-
+import {errHandlerInTC} from "../utils/validations/errHandler";
 
 const initialState = {
     valueOfInputEmail: "" as string,
@@ -104,13 +103,7 @@ export const sendEmailForRecoveryPassTC = (mail: string) => async (dispatch: Dis
         dispatch(onChangeInputAC(""))
         dispatch(onChangeAppStatusAC("succeeded"))
     } catch (err) {
-        if (err.response) {
-            dispatch(setErrorStatusForPassRecAC(err.response.data.error))
-            dispatch(onChangeAppStatusAC("failed"))
-        } else {
-            dispatch(setErrorStatusForPassRecAC(err.message))
-            dispatch(onChangeAppStatusAC("failed"))
-        }
+        errHandlerInTC(dispatch, err, onChangeAppStatusAC, setErrorStatusForPassRecAC)
     }
 }
 export const sendPassForNewPassTC = (pass: string, token: string) => async (dispatch: Dispatch<
@@ -125,15 +118,8 @@ export const sendPassForNewPassTC = (pass: string, token: string) => async (disp
         dispatch(onChangeInputPassAC(""))
         dispatch(onChangeInputPassRecAC(""))
         dispatch(onChangeAppStatusAC("succeeded"))
-
     } catch (err) {
-        if (err.response) {
-            dispatch(setErrorStatusForNewPassAC(err.response.data.error))
-            dispatch(onChangeAppStatusAC("failed"))
-        } else {
-            dispatch(setErrorStatusForNewPassAC(err.message))
-            dispatch(onChangeAppStatusAC("failed"))
-        }
+        errHandlerInTC(dispatch, err, onChangeAppStatusAC,setErrorStatusForNewPassAC)
     }
 }
 

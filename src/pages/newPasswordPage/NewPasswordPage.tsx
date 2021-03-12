@@ -10,7 +10,7 @@ import {
 } from "../../store/passwordRecovery-Reducer";
 import {validations} from "../../utils/validations/validations";
 import {onChangeAppStatusAC} from "../../store/app-Reducer";
-import {Preloader} from "../common/preloader/Preloader";
+import {Preloader} from "../../common/preloader/Preloader";
 
 const NewPasswordPage:React.FC = () => {
 

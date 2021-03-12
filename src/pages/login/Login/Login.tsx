@@ -6,7 +6,7 @@ import {PassInput} from "../../../common/PassInput";
 import {Button} from "../../../common/Button";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {Preloader} from "../../common/preloader/Preloader";
+import {Preloader} from "../../../common/preloader/Preloader";
 import {RequestStatusType} from "../../../store/app-Reducer";
 
 type LoginPropsType = {

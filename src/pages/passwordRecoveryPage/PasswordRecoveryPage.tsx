@@ -6,7 +6,7 @@ import {EmailInput} from "../../common/EmailInput";
 import {Button} from "../../common/Button";
 import s from "../registration/Registration.module.css";
 import {validations} from "../../utils/validations/validations";
-import {Preloader} from "../common/preloader/Preloader";
+import {Preloader} from "../../common/preloader/Preloader";
 import {RequestStatusType} from "../../store/app-Reducer";
 
 

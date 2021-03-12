@@ -11,6 +11,7 @@ export const LoginContainer = () => {
     const dispatch = useDispatch()
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     const error = useSelector<AppRootStateType, string|undefined>(state => state.reg.error)
+    const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
@@ -36,7 +37,7 @@ export const LoginContainer = () => {
     const onSubmit = () => {
         dispatch(authenticationUserLoginTC({email, password, rememberMe}))
     }
-    if(statusApp==="succeeded") {
+    if(isAuth) {
         return <Redirect to={"./profile"}/>
     }
 

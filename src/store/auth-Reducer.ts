@@ -1,7 +1,8 @@
-import {Dispatch} from "react";
+import {Dispatch} from "redux";
 import {authAPI, userRequestData} from "../api/authApi";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 import {setErrorAC, SetErrorActionType} from "./reg-Reducer";
+import {errHandlerInTC} from "../utils/validations/errHandler";
 
 export const initialState: InitialStateType = {
     userData: {
@@ -22,7 +23,8 @@ export const initialState: InitialStateType = {
     loginSuccess: false,
 }
 
-const AUTH_TRY = "AUTH_TRY"
+const AUTH_TRY = "auth/AUTH_TRY"
+const LOGOUT = "auth/LOGOUT"
 
 export type UserDataType = {
     _id: string | null
@@ -40,12 +42,12 @@ export type UserDataType = {
 }
 
 type InitialStateType = {
-    userData: UserDataType,
+    userData: UserDataType | any,
     isAuth: boolean,
     loginSuccess: boolean,
 }
 
-type ActionsType = ReturnType<typeof authTryAC>|SetErrorActionType
+type ActionsType = authTryACType |SetErrorActionType | logoutACType
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch(action.type) {
@@ -54,6 +56,12 @@ export const authReducer = (state: InitialStateType = initialState, action: Acti
                 ...state,
                 userData: action.userData,
                 isAuth: action.isAuth
+            }
+        case LOGOUT:
+            return {
+                ...state,
+                userData: null,
+                isAuth: false
             }
         default:
             return state
@@ -67,6 +75,11 @@ type authTryACType = {
 }
 export const authTryAC = (userData: UserDataType, isAuth: boolean): authTryACType => ({type: AUTH_TRY, userData, isAuth})
 
+type logoutACType = {
+    type: typeof LOGOUT
+}
+export const logoutAC = ():logoutACType => ({type: LOGOUT})
+
 export const authenticationUserLoginTC = (data: userRequestData) =>
     (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType | SetErrorActionType>)=> {
         dispatch(onChangeAppStatusAC("loading"))
@@ -76,16 +89,33 @@ export const authenticationUserLoginTC = (data: userRequestData) =>
                     dispatch(authTryAC(res.data, true))
                     dispatch(onChangeAppStatusAC("succeeded"))
                 }else {
-                    dispatch(authTryAC(initialState.userData, false))
+                    dispatch(authTryAC(initialState.userData as any, false))
                     dispatch(onChangeAppStatusAC("failed"))
                 }
             })
             .catch((err) => {
-                dispatch(onChangeAppStatusAC("failed"))
-                if (err.response) {
-                    dispatch(setErrorAC(err.response.data.error))
-                } else {
-                    dispatch(setErrorAC(err.message))
-                }
+                errHandlerInTC(dispatch, err, onChangeAppStatusAC, setErrorAC)
             })
     }
+
+export const meRequestTC = () => async (dispatch: Dispatch<OnChangeAppStatusActionType | authTryACType>) => {
+    try {
+        dispatch(onChangeAppStatusAC("loading"))
+        const res = await authAPI.meRequest()
+        dispatch(authTryAC(res.data, true))
+        dispatch(onChangeAppStatusAC("idle"))
+    }   catch (err) {
+        errHandlerInTC(dispatch, err, onChangeAppStatusAC)
+    }
+};
+
+export const logoutTC = () => async (dispatch: Dispatch<OnChangeAppStatusActionType | logoutACType>) => {
+    try {
+        dispatch(onChangeAppStatusAC("loading"))
+        await authAPI.logOut()
+        dispatch(logoutAC())
+        dispatch(onChangeAppStatusAC("succeeded"))
+    } catch (err) {
+        errHandlerInTC(dispatch, err, onChangeAppStatusAC)
+    }
+}

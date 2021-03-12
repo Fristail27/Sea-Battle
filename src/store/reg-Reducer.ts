@@ -1,6 +1,7 @@
 import {DataType, regAPI} from "../api/registration-api";
-import {Dispatch} from "react";
+import {Dispatch} from "redux";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
+import {errHandlerInTC} from "../utils/validations/errHandler";
 
 type InitialStateType = typeof initialState
 type ActionsType = RegisterActionType|SetErrorActionType
@@ -50,11 +51,6 @@ export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType|On
             }
         })
         .catch((err) => {
-            dispatch(onChangeAppStatusAC("failed"))
-            if (err.response) {
-                dispatch(setErrorAC(err.response.data.error))
-            } else {
-                dispatch(setErrorAC(err.message))
-            }
+            errHandlerInTC(dispatch, err, onChangeAppStatusAC, setErrorAC)
         })
 }
