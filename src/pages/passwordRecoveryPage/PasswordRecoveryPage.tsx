@@ -7,7 +7,7 @@ import {Button} from "../../common/Button";
 import s from "../registration/Registration.module.css";
 import {validations} from "../../utils/validations/validations";
 import {Preloader} from "../common/preloader/Preloader";
-import { RequestStatusType } from "../../store/auth-Reducer";
+import {RequestStatusType} from "../../store/app-Reducer";
 
 
 const PasswordRecoveryPage = () => {

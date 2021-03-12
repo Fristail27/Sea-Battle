@@ -6,17 +6,18 @@ import {PassInput} from "../../../common/PassInput";
 import {Button} from "../../../common/Button";
 import {useSelector} from "react-redux";
 import {AppRootStateType} from "../../../store/store";
-import {RequestStatusType} from "../../../store/reg-Reducer";
 import {Preloader} from "../../common/preloader/Preloader";
+import {RequestStatusType} from "../../../store/app-Reducer";
 
 type LoginPropsType = {
     emailHandler: (email: string) => void
     passwordHandler: (pass: string) => void
     checkHandler: (e: ChangeEvent<HTMLInputElement>) => void
-    onSubm: () => void
+    onSubmit: () => void
     email: string
     password: string
     check: boolean
+    error: string|undefined
 }
 
 export const Login = (props: LoginPropsType) => {
@@ -31,9 +32,10 @@ export const Login = (props: LoginPropsType) => {
                     <span>Remember me</span>
                     <input onChange={props.checkHandler} type="checkbox" checked={props.check}/>
                 </div>
-                <Button name={"Login"} onClick={props.onSubm} status={statusApp}/>
+                <Button name={"Login"} onClick={props.onSubmit} status={statusApp}/>
+                {props.error && <div style={{color:"red"}}>{props.error}</div>}
+                {statusApp === "loading" && <Preloader/>}
             </form>
-            {statusApp === "loading" && <Preloader/>}
         </div>
     )
 }

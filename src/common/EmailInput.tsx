@@ -1,5 +1,6 @@
 import s from "./Input.module.css";
 import React, {ChangeEvent, useState} from "react";
+import {validations} from "../utils/validations/validations";
 
 type EmailInputPropsType = {
     email: string
@@ -13,13 +14,15 @@ export const EmailInput: React.FC<EmailInputPropsType> = ({email, onChange}) => 
     const onBlurEmail = () => {
         if (email.trim() === "") {
             setEmailErr('Email Required')
+            onChange("")
         }
-        if(email) {
-            if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        if (email) {
+            if (validations.emailValid(email)) {
                 setEmailErr('Invalid email address')
             } else {
                 setEmailErr('')
-            }}
+            }
+        }
     }
     const onMailChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         onChange(e.currentTarget.value)

@@ -1,8 +1,9 @@
 import {Dispatch} from "react";
 import {authAPI, userRequestData} from "../api/authApi";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
+import {setErrorAC, SetErrorActionType} from "./reg-Reducer";
 
-export const initialState = {
+export const initialState: InitialStateType = {
     userData: {
         _id: null,
         email: null,
@@ -21,8 +22,6 @@ export const initialState = {
     loginSuccess: false,
 }
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
-
 const AUTH_TRY = "AUTH_TRY"
 
 export type UserDataType = {
@@ -37,15 +36,16 @@ export type UserDataType = {
     verified: boolean | null
     rememberMe: boolean | null
     error?: string | null
+    isAuth: boolean
 }
 
 type InitialStateType = {
     userData: UserDataType,
-    isAuth: boolean
+    isAuth: boolean,
     loginSuccess: boolean,
 }
 
-type ActionsType = ReturnType<typeof authTryAC>
+type ActionsType = ReturnType<typeof authTryAC>|SetErrorActionType
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch(action.type) {
@@ -68,7 +68,7 @@ type authTryACType = {
 export const authTryAC = (userData: UserDataType, isAuth: boolean): authTryACType => ({type: AUTH_TRY, userData, isAuth})
 
 export const authenticationUserLoginTC = (data: userRequestData) =>
-    (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType>)=> {
+    (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType | SetErrorActionType>)=> {
         dispatch(onChangeAppStatusAC("loading"))
         authAPI.userAuthorization(data)
             .then((res) => {
@@ -81,7 +81,11 @@ export const authenticationUserLoginTC = (data: userRequestData) =>
                 }
             })
             .catch((err) => {
-                const error = err.response ? err.response.data.error : (err.message + ", more details on console")
                 dispatch(onChangeAppStatusAC("failed"))
+                if (err.response) {
+                    dispatch(setErrorAC(err.response.data.error))
+                } else {
+                    dispatch(setErrorAC(err.message))
+                }
             })
     }

@@ -1,16 +1,16 @@
 import React, {ChangeEvent, useState} from "react";
 import {Login} from "./Login/Login";
-import {connect, useDispatch, useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {authenticationUserLoginTC} from "../../store/auth-Reducer";
 import { Redirect } from "react-router-dom";
-import {onChangeAppStatusAC} from "../../store/app-Reducer";
-import {RequestStatusType} from "../../store/reg-Reducer";
+import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
 
-const LoginContainer = () => {
+export const LoginContainer = () => {
 
     const dispatch = useDispatch()
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
+    const error = useSelector<AppRootStateType, string|undefined>(state => state.reg.error)
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
@@ -33,7 +33,7 @@ const LoginContainer = () => {
             dispatch(onChangeAppStatusAC("idle"))
         }
     }
-    const onSubm = () => {
+    const onSubmit = () => {
         dispatch(authenticationUserLoginTC({email, password, rememberMe}))
     }
     if(statusApp==="succeeded") {
@@ -48,15 +48,8 @@ const LoginContainer = () => {
             email={email}
             password={password}
             check={rememberMe}
-            onSubm={onSubm}
+            onSubmit={onSubmit}
+            error={error}
         />
     )
 }
-
-const mstp = (state: AppRootStateType) => {
-    return {
-        user: state.auth.userData
-    }
-}
-
-export default connect(mstp, {})(LoginContainer)

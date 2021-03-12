@@ -1,5 +1,5 @@
 import React from "react";
-import {RequestStatusType} from "../store/reg-Reducer";
+import {RequestStatusType} from "../store/app-Reducer";
 
 type ButtonPropsType = {
     name: string

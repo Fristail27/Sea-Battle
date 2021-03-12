@@ -1,5 +1,6 @@
 import s from "./Input.module.css";
 import React, {ChangeEvent, useState} from "react";
+import {validations} from "../utils/validations/validations";
 
 type PassInputPropsType = {
     password: string
@@ -14,17 +15,17 @@ export const PassInput: React.FC<PassInputPropsType> = ({password, onChange}) =>
         if (password.trim() === "") {
             setPasswordErr('Password Required')
         }
+        if (password) {
+            if (validations.passValid(password)) {
+                setPasswordErr('Password must be more than 7 characters')
+            } else {
+                setPasswordErr('')
+            }
+        }
     }
     const onPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (password.length < 7) {
-            setPasswordErr('Password must be more than 7 characters')
-        } else {
-            setPasswordErr('')
-        }
         onChange(e.currentTarget.value.trim())
     }
-    console.log(password)
-
 
     return (
         <div>

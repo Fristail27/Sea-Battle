@@ -1,6 +1,5 @@
-import { RequestStatusType } from "./auth-Reducer"
-
 const ON_CHANGE_APP_STATUS = "App/ON_CHANGE_APP_STATUS"
+export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 const initialState = {
     appStatus: 'idle' as RequestStatusType

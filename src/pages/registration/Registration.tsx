@@ -3,12 +3,13 @@ import {NavLink, Redirect} from "react-router-dom";
 import s from "./Registration.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
-import {registerTC, RequestStatusType} from "../../store/reg-Reducer";
+import {registerTC} from "../../store/reg-Reducer";
 import {Preloader} from "../common/preloader/Preloader";
-import {onChangeAppStatusAC} from "../../store/app-Reducer";
+import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
 import {EmailInput} from "../../common/EmailInput";
 import {PassInput} from "../../common/PassInput";
 import {Button} from "../../common/Button";
+import {validations} from "../../utils/validations/validations";
 
 const Registration = () => {
 
@@ -27,7 +28,7 @@ const Registration = () => {
     }
     const onButtonClick = () => {
         if (email && password) {
-            if (password === repeatPassword) {
+            if (password === repeatPassword && !validations.emailValid(email)) {
                 dispatch(registerTC({email, password}))
             } else {
                 setSendError("incorrect email or password")

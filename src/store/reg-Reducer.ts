@@ -2,16 +2,13 @@ import {DataType, regAPI} from "../api/registration-api";
 import {Dispatch} from "react";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 
-export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
+type InitialStateType = typeof initialState
+type ActionsType = RegisterActionType|SetErrorActionType
 
 const initialState = {
     succeedRegister: false,
     error: undefined as string|undefined
 }
-
-type InitialStateType = typeof initialState
-
-type ActionsType = RegisterActionType|SetErrorActionType
 
 export const regReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
@@ -30,7 +27,7 @@ const registerAC = (succeedRegister: boolean) => {
         succeedRegister
     } as const
 }
-const setErrorAC = (error: string) => {
+export const setErrorAC = (error: string) => {
     return {
         type: "reg/SET-ERROR",
         error
@@ -38,7 +35,7 @@ const setErrorAC = (error: string) => {
 }
 
 type RegisterActionType = ReturnType<typeof registerAC>
-type SetErrorActionType = ReturnType<typeof setErrorAC>
+export type SetErrorActionType = ReturnType<typeof setErrorAC>
 
 export const registerTC = (data: DataType) => (dispatch: Dispatch<ActionsType|OnChangeAppStatusActionType>) => {
     dispatch(onChangeAppStatusAC("loading"))
