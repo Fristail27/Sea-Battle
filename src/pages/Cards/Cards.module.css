@@ -1,0 +1,17 @@
+.cardsHeader {
+    margin-top: 20px;
+    border: 1px solid;
+    display: flex;
+}
+.cardsHeader div {
+    width: 250px;
+}
+
+.cards {
+    display: flex;
+    border: 1px solid;
+}
+
+.buttons {
+    margin-left: 95px;
+}

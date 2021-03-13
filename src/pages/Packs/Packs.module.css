@@ -1,0 +1,17 @@
+.packsHeader {
+    margin-top: 20px;
+    border: 1px solid;
+    display: flex;
+}
+.packsHeader div {
+    width: 300px;
+}
+
+.packs {
+    border: 1px solid;
+    display: flex;
+}
+
+.buttons {
+    margin-left: 70px;
+}

@@ -12,6 +12,8 @@ import {LoginContainer} from "./pages/login/LoginContainer";
 import {Navigations} from "./common/Navigation/Navigation";
 import {useDispatch} from "react-redux";
 import {meRequestTC} from "./store/auth-Reducer";
+import {Packs} from "./pages/Packs/Packs";
+import {Cards} from "./pages/Cards/Cards";
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         <Route path={"/password-recovery-page"} render={()=><PasswordRecoveryPage/>}/>
         <Route path={'/test-page'} render={ () => <TestPage/> }/>
         <Route path={'/error404'} render={ () => <Error404/> }/>
+        <Route path={'/packs'} render={ () => <Packs/> }/>
+        <Route path={'/cards/:id?'} render={ () => <Cards/> }/>
         <Redirect from={ '*' } to={'/error404'}/>
       </Switch>
     </div>
