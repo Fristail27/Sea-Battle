@@ -1,0 +1,36 @@
+span::selection {
+    background: transparent;
+}
+span {
+    cursor: pointer;
+}
+.main {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    min-height: 15px;
+}
+.num {
+    padding:0 3px;
+    margin:0 2px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.currentNum {
+    padding:0 3px;
+    margin:0 2px;
+    font-weight: bolder;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+.nums {
+    /*position: absolute;*/
+}
+.startButtons{
+    /*position: absolute;*/
+    /*left: 25%;*/
+}
+.endButtons{
+    /*position: absolute;*/
+    /*left: 59%;*/
+}

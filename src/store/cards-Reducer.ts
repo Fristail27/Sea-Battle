@@ -36,13 +36,14 @@ const getCards = (data: GetCardsResponseType) => {
 }
 type getCardsReturnType = ReturnType<typeof getCards>
 
-export const getCardsTC = (data: GetCardsParamsType) => (dispatch: Dispatch) => {
+export const getCardsTC = (data: GetCardsParamsType, ) => (dispatch: Dispatch) => {
     cardsAPI.getCards(data).then((response) => {
         dispatch(getCards(response.data))
     })
 }
 
 export const addCardTC = (data: AddCardDataType) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    //@ts-ignore
     const state = getState().cards
     cardsAPI.addCard(data).then(() => {
         dispatch(getCardsTC({
@@ -56,6 +57,7 @@ export const addCardTC = (data: AddCardDataType) => (dispatch: Dispatch<any>, ge
 }
 
 export const delCardTC = (cardId: string, packId: string) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    //@ts-ignore
     const state = getState().cards
     cardsAPI.deleteCard(cardId).then(() => {
         dispatch(getCardsTC({
@@ -69,6 +71,7 @@ export const delCardTC = (cardId: string, packId: string) => (dispatch: Dispatch
 }
 
 export const updCardTC = (packId: string, data: UpdateCardDataType) => (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    //@ts-ignore
     const state = getState().cards
     cardsAPI.updateCard(data).then(() => {
         dispatch(getCardsTC({

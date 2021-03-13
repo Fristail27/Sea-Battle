@@ -20,7 +20,7 @@ function App() {
     const dispatch = useDispatch()
     useEffect(()=>{
         dispatch(meRequestTC())
-    },[])
+    },[dispatch])
   return (
     <div className="App">
       <Navigations/>

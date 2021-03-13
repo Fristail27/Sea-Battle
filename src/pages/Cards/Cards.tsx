@@ -9,7 +9,7 @@ import {addCardTC, delCardTC, getCardsTC, updCardTC} from "../../store/cards-Red
 export const Cards = () => {
 
     const dispatch = useDispatch()
-    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
+    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards as any)
     const {id} = useParams<{ id?: string }>()
 
     useEffect(() => {

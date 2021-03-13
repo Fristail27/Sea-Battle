@@ -1,0 +1,11 @@
+.panel {
+    margin: 4px 0;
+    display:flex;
+    justify-content: space-between;
+}
+.search{
+ margin: 0 20px;
+}
+.paginator {
+    margin: 0 20px;
+}

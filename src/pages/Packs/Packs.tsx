@@ -2,17 +2,18 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {CardPackType, UpdatePackDataType} from "../../api/packs-api";
 import s from "./Packs.module.css"
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {addPackTC, delPackTC, getPacksTC, updPackTC} from "../../store/packs-Reducer";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink} from "react-router-dom";
+import { PanelForPacks } from "../../common/panelForPacks/PanelForPacks";
+import {RequestStatusType} from "../../store/app-Reducer";
 
 
 export const Packs = () => {
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getPacksTC({pageCount: 10}))
-    }, [])
+    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     const cardPacks = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
+    const [rend, setRend] = useState<number>(0)
     const addPack = () => {
         dispatch(addPackTC({name: "New Pack"}))
     }
@@ -23,8 +24,17 @@ export const Packs = () => {
         dispatch(updPackTC(data))
     }
 
+    if (statusApp !=="loading" && rend !== 1) {
+        setRend(1)
+    }
+    useEffect(() => {
+        if (statusApp !=="loading") {
+            dispatch(getPacksTC(null as any))
+        }
+    }, [rend, dispatch])
     return (
         <div>
+            <PanelForPacks/>
             <div className={s.packsHeader}>
                 <div>Name</div>
                 <div>cardsCount</div>
@@ -34,7 +44,7 @@ export const Packs = () => {
                     <button style={{margin: "10px"}} onClick={addPack}>add</button>
                 </div>
             </div>
-            {cardPacks.map(cp => <div className={s.packs}>
+            {cardPacks.map((cp,i) => <div key={i} className={s.packs}>
                 <div style={{width: "300px"}}>{cp.name}</div>
                 <div style={{width: "300px"}}>{cp.cardsCount}</div>
                 <div style={{width: "300px"}}>{cp.created}</div>
