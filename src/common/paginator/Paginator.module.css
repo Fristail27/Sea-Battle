@@ -6,6 +6,7 @@ span {
 }
 .main {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     position: relative;
     min-height: 15px;
@@ -24,7 +25,14 @@ span {
     border-radius: 5px;
 }
 .nums {
+    min-width: 380px;
+    display: flex;
+    justify-content: flex-end;
     /*position: absolute;*/
+}
+.btns {
+    display: flex;
+    justify-content: space-between;
 }
 .startButtons{
     /*position: absolute;*/
