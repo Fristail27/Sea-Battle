@@ -6,10 +6,11 @@ import {AppRootStateType} from "./store";
 import {onChangeAppStatusAC} from "./app-Reducer";
 
 export type InitialStateType = typeof initialState
-type ActionType = GetPacksReturnType | SetSearchValueType
+type ActionType = GetPacksReturnType | SetSearchValueType | setSortTypeActionType
 
 const GET_CARDS_PACKS = "packs/GET-CARDS-PACKS"
 const SET_SEARCH_VALUE = "packs/SET_SEARCH_VALUE"
+const SET_SORT_TYPE = "packs/SET_SORT_TYPE"
 const initialState = {
     cardPacks: [] as Array<CardPackType>,
     cardPacksTotalCount: 0,
@@ -18,6 +19,7 @@ const initialState = {
     page: 1,
     pageCount: 10,
     searchValue: "",
+    sortPacks: "0updated"
 }
 
 export const packsReducer = (state: InitialStateType = initialState, action: ActionType): InitialStateType => {
@@ -26,6 +28,8 @@ export const packsReducer = (state: InitialStateType = initialState, action: Act
             return {...state, ...action.data}
         case SET_SEARCH_VALUE:
             return {...state, searchValue: action.value}
+        case SET_SORT_TYPE:
+            return {...state, sortPacks:action.value}
         default:
             return state
     }
@@ -42,9 +46,16 @@ type GetPacksReturnType = ReturnType<typeof getPacksAC>
 export const setSearchValueAC = (value:string) => ({type: SET_SEARCH_VALUE, value} as const)
 type SetSearchValueType = ReturnType<typeof setSearchValueAC>
 
-export const getPacksTC = (data?: getCardPackParamsType, pageNumber:number = 1, searchValue:string="") => (dispatch: Dispatch) => {
+export const setSortTypeAC = (value:string) => ({type: SET_SORT_TYPE, value} as const)
+type setSortTypeActionType = ReturnType<typeof setSortTypeAC>
+
+export const getPacksTC = (data?: getCardPackParamsType, pageNumber:number = 1, searchValue:string="") => (dispatch: Dispatch, getState: () => AppRootStateType) => {
+    const params = getState().packs
     dispatch(onChangeAppStatusAC("loading"))
-    packsAPI.getCardPacks(data, pageNumber, searchValue).then((response) => {
+    // if (data && data.sortPacks) {
+    //     dispatch(setSortTypeAC(data.sortPacks))
+    // }
+    packsAPI.getCardPacks({...data, sortPacks: params.sortPacks}, pageNumber, searchValue).then((response) => {
         dispatch(getPacksAC(response.data))
         dispatch(onChangeAppStatusAC("idle"))
     })

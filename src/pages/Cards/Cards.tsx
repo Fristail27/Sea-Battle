@@ -5,6 +5,7 @@ import {CardType} from "../../api/cards-api";
 import React, {useEffect} from "react";
 import {useParams} from "react-router-dom";
 import {addCardTC, delCardTC, getCardsTC, updCardTC} from "../../store/cards-Reducer";
+import {Paginator} from "../../common/paginator/Paginator";
 
 export const Cards = () => {
 
@@ -14,7 +15,7 @@ export const Cards = () => {
 
     useEffect(() => {
         if (id) {
-            dispatch(getCardsTC({cardsPack_id: id}))
+            dispatch(getCardsTC({cardsPack_id: id , pageCount:10}))
         }
     }, [])
 
@@ -33,6 +34,7 @@ export const Cards = () => {
     }
 
     return (<div>
+            {/*<Paginator currentPage={}/>*/}
             <div className={s.cardsHeader}>
                 <div>Question</div>
                 <div>Answer</div>
@@ -43,7 +45,7 @@ export const Cards = () => {
                     <button style={{margin: "10px"}} onClick={addCard}>Add</button>
                 </div>
             </div>
-            {cards.map(c => <div className={s.cards}>
+            {cards.map(c => <div key={c._id} className={s.cards}>
                 <div style={{width: "250px"}}>{c.question}</div>
                 <div style={{width: "250px"}}>{c.answer}</div>
                 <div style={{width: "250px"}}>{c.grade}</div>
