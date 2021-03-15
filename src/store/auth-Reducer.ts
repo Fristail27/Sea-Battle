@@ -5,20 +5,7 @@ import {setErrorAC, SetErrorActionType} from "./reg-Reducer";
 import {errHandlerInTC} from "../utils/validations/errHandler";
 
 export const initialState: InitialStateType = {
-    userData: {
-        _id: null,
-        email: null,
-        name: null,
-        avatar: null,
-        publicCardPacksCount: null,
-        created: null,
-        updated: null,
-        isAdmin: null,
-        verified: null,
-        rememberMe: null,
-        error: null,
-        isAuth: false
-    },
+    userData: null,
     isAuth: false,
     loginSuccess: false,
 }
@@ -39,10 +26,10 @@ export type UserDataType = {
     rememberMe: boolean | null
     error?: string | null
     isAuth: boolean
-}
+} | null
 
 type InitialStateType = {
-    userData: UserDataType | any,
+    userData: UserDataType | null,
     isAuth: boolean,
     loginSuccess: boolean,
 }
@@ -85,7 +72,7 @@ export const authenticationUserLoginTC = (data: userRequestData) =>
         dispatch(onChangeAppStatusAC("loading"))
         authAPI.userAuthorization(data)
             .then((res) => {
-                if(!res.data.error) {
+                if(res.data && !res.data.error) {
                     dispatch(authTryAC(res.data, true))
                     dispatch(onChangeAppStatusAC("succeeded"))
                 }else {
