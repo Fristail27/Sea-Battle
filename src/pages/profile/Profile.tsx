@@ -5,16 +5,13 @@ import {AppRootStateType} from "../../store/store";
 
 
 const Profile = () => {
-    const profName = useSelector<AppRootStateType, string | null>(state => state.auth.userData.name)
+    const profName = useSelector<AppRootStateType, string | null>(state => state.auth.userData ?  state.auth.userData.name : null)
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     if(!isAuth) {
         return <Redirect to={'/'}/>
     }
-
     return (
-
         <h1>profile {profName}</h1>
-
     )
 }
 

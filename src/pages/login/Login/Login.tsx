@@ -32,6 +32,7 @@ export const Login = (props: LoginPropsType) => {
                     <input onChange={props.checkHandler} type="checkbox" checked={props.check}/>
                 </div>
                 <Button name={"Login"} onClick={props.onSubm} status={statusApp}/>
+                {}
             </form>
             {statusApp === "loading" && <Preloader/>}
         </div>
