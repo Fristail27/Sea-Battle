@@ -2,22 +2,30 @@ import s from "./Cards.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {CardType} from "../../api/cards-api";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
-import {addCardTC, delCardTC, getCardsTC, updCardTC} from "../../store/cards-Reducer";
+import {addCardTC, delCardTC, getCardsTC, InitialStateType, updCardTC} from "../../store/cards-Reducer";
 import {Paginator} from "../../common/paginator/Paginator";
+import {RequestStatusType} from "../../store/app-Reducer";
 
 export const Cards = () => {
 
     const dispatch = useDispatch()
-    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards as any)
+    const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
+    const cardsState = useSelector<AppRootStateType, InitialStateType>(state => state.cards)
+    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     const {id} = useParams<{ id?: string }>()
+    const [rend, setRend] = useState<number>(0)
+
+    if (statusApp !=="loading" && rend !== 1) {
+        setRend(1)
+    }
 
     useEffect(() => {
-        if (id) {
-            dispatch(getCardsTC({cardsPack_id: id , pageCount:10}))
+        if (id && statusApp !=="loading") {
+            dispatch(getCardsTC({cardsPack_id: id}))
         }
-    }, [])
+    }, [rend, dispatch])
 
     const addCard = () => {
         if (id) {
@@ -34,7 +42,7 @@ export const Cards = () => {
     }
 
     return (<div>
-            {/*<Paginator currentPage={}/>*/}
+            <Paginator clickHandler={(n:number)=>dispatch(getCardsTC({page:n, cardsPack_id: id} as any))} paginatorSize={10} pagesCount={Math.ceil(cardsState.cardsTotalCount/cardsState.pageCount)} currentPage={cardsState.page}/>
             <div className={s.cardsHeader}>
                 <div>Question</div>
                 <div>Answer</div>

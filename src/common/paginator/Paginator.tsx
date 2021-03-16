@@ -8,13 +8,14 @@ type PaginatorPropsType = {
     pagesCount: number
     currentPage: number
     paginatorSize: number
+    clickHandler: any
 }
 
 export const Paginator: React.FC<PaginatorPropsType> = (props) => {
     const lastPagBlock = Math.ceil(props.pagesCount / props.paginatorSize)
-    const searchValue = useSelector<AppRootStateType, string>(state => state.packs.searchValue)
+    // const searchValue = useSelector<AppRootStateType, string>(state => state.packs.searchValue)
     const [currentPaginatorBlock, setCurrentPaginatorBlock] = useState<number>(0)
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
 
     const Line:React.FC = () => {
         const arr = []
@@ -28,7 +29,7 @@ export const Paginator: React.FC<PaginatorPropsType> = (props) => {
                         if ((p) === props.currentPage) {
                             return <span key={i} className={s.currentNum}>{p}</span>
                         } else {
-                            return <span onClick={() => dispatch(getPacksTC(null as any, p, searchValue))} key={i}
+                            return <span onClick={() => props.clickHandler(p)} key={i}
                                          className={s.num}>{p}</span>
                         }
                     } else {return null}

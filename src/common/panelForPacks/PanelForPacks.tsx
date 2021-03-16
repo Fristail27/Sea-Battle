@@ -48,7 +48,7 @@ export const PanelForPacks = () => {
                 <button onClick={()=> {dispatch(getPacksTC({sortPacks: `${orderSelectValue}${typeSelectValue}`}))}}>Sort</button>
             </div>
             <div className={s.paginator}>
-                <Paginator paginatorSize={10} currentPage={pack.page} pagesCount={pagesCount}/>
+                <Paginator clickHandler={(p:number) => dispatch(getPacksTC(null as any, p, searchValue))} paginatorSize={10} currentPage={pack.page} pagesCount={pagesCount}/>
             </div>
         </div>
     )

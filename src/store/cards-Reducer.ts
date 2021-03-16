@@ -4,7 +4,7 @@ import {
 import {Dispatch} from "redux";
 import {AppRootStateType} from "./store";
 
-type InitialStateType = typeof initialState
+export type InitialStateType = typeof initialState
 type ActionType = getCardsReturnType
 
 const GET_CARDS = "cards/GET-CARDS"
@@ -15,7 +15,7 @@ const initialState = {
     maxGrade: 10,
     minGrade: 0,
     page: 1,
-    pageCount: 50,
+    pageCount: 4,
     packUserId: ""
 }
 
