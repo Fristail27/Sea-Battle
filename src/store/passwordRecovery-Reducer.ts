@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
 import {errHandlerInTC} from "../utils/validations/errHandler";
 
-const initialState = {
+export const initialState = {
     valueOfInputEmail: "" as string,
     errorStatusForPassRec: null as string | null,
     errorStatusForNewPass: null as string | null,
