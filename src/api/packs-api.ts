@@ -41,10 +41,8 @@ const instance = axios.create({
 })
 
 export const packsAPI = {
-    getCardPacks (data?: getCardPackParamsType, pageNumber:number = 1, searchValue:string="") {
-        return instance.get<getCardPackResponseType>(`cards/pack?page=${pageNumber}&pageCount=10&packName=${searchValue}`
-            , {params: data}
-            )
+    getCardPacks (data?: getCardPackParamsType) {
+        return instance.get<getCardPackResponseType>(`cards/pack`,{params: data})
     },
     addPack (data: AddPackDataType) {
         return instance.post(`cards/pack`, {cardsPack: data})

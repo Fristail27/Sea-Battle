@@ -24,7 +24,9 @@ const Registration = () => {
 
     const onRepeatPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRepeatPassword(e.currentTarget.value)
-        if (statusApp !== "idle") dispatch(onChangeAppStatusAC("idle"))
+        if (statusApp !== "idle") {
+            dispatch(onChangeAppStatusAC("idle"))
+        }
     }
     const onButtonClick = () => {
         if (email && password) {
