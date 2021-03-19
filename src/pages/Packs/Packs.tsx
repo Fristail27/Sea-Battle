@@ -3,7 +3,7 @@ import {AppRootStateType} from "../../store/store";
 import {CardPackType, UpdatePackDataType} from "../../api/packs-api";
 import s from "./Packs.module.css"
 import React, {useEffect, useState} from "react";
-import {addPackTC, delPackTC, getPacksTC, updPackTC} from "../../store/packs-Reducer";
+import {addPackTC, delPackTC, getPacksTC, setFilterPacksAC, updPackTC} from "../../store/packs-Reducer";
 import {NavLink} from "react-router-dom";
 import {PanelForPacks} from "../../common/panelForPacks/PanelForPacks";
 import {RequestStatusType} from "../../store/app-Reducer";
@@ -42,14 +42,18 @@ export const Packs = () => {
             <PanelForPacks/>
             <div className={s.packsHeader}>
                 <div>Name</div>
-                <div>Cards count</div>
+                <div>
+                    cardsCount
+                    <button onClick={()=> dispatch(setFilterPacksAC("UP"))}>Up</button>
+                    <button onClick={()=> dispatch(setFilterPacksAC("DOWN"))}>Down</button>
+                </div>
                 <div>Created</div>
                 <div>Updated</div>
                 <div>
                     <button style={{margin: "10px"}} onClick={addPack}>add</button>
                 </div>
             </div>
-            {cardPacks.map((cp, i) => <div key={i} className={s.packs}>
+            {cardPacks.map((cp) => <div key={cp._id} className={s.packs}>
                 <div style={{width: "300px"}}>{cp.name}</div>
                 <div style={{width: "300px"}}>{cp.cardsCount}</div>
                 <div style={{width: "300px"}}>{cp.created}</div>
