@@ -28,7 +28,7 @@ span {
     min-width: 380px;
     display: flex;
     justify-content: flex-end;
-    /*position: absolute;*/
+    margin-right: 7px;
 }
 .btns {
     display: flex;

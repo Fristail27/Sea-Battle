@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
-import {getPacksTC} from "../../store/packs-Reducer";
 import s from "./Paginator.module.css"
-import {AppRootStateType} from "../../store/store";
+
 
 type PaginatorPropsType = {
     pagesCount: number
@@ -14,9 +12,7 @@ type PaginatorPropsType = {
 export const Paginator: React.FC<PaginatorPropsType> = (props) => {
 
     const lastPagBlock = Math.ceil(props.pagesCount / props.paginatorSize)
-    // const searchValue = useSelector<AppRootStateType, string>(state => state.packs.searchValue)
     const [currentPaginatorBlock, setCurrentPaginatorBlock] = useState<number>(0)
-    // const dispatch = useDispatch()
 
     const Line: React.FC = () => {
         const arr = []
