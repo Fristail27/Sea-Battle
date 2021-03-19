@@ -47,9 +47,6 @@ export const Packs = () => {
                     <button onClick={()=> dispatch(setFilterPacksAC("UP"))}>Up</button>
                     <button onClick={()=> dispatch(setFilterPacksAC("DOWN"))}>Down</button>
                 </div>
-                <div>created</div>
-                <div>updated</div>
-                <div>Cards count</div>
                 <div>Created</div>
                 <div>Updated</div>
                 <div>
