@@ -1,11 +1,7 @@
-import { Dispatch } from "redux"
+import {Dispatch} from "redux"
 
-export function errHandlerInTC(
-    dispatch: Dispatch<any>,
-    err: any,
-    setAppStatusAC: any,
-    setErrAC?: any
-) {
+export function errHandlerInTC(dispatch: Dispatch<any>, err: any, setAppStatusAC: any, setErrAC?: any) {
+
     dispatch(setAppStatusAC("failed"))
     if (setErrAC) {
         if (err.response) {

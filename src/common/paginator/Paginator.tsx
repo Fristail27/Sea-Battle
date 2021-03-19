@@ -12,12 +12,13 @@ type PaginatorPropsType = {
 }
 
 export const Paginator: React.FC<PaginatorPropsType> = (props) => {
+
     const lastPagBlock = Math.ceil(props.pagesCount / props.paginatorSize)
     // const searchValue = useSelector<AppRootStateType, string>(state => state.packs.searchValue)
     const [currentPaginatorBlock, setCurrentPaginatorBlock] = useState<number>(0)
     // const dispatch = useDispatch()
 
-    const Line:React.FC = () => {
+    const Line: React.FC = () => {
         const arr = []
         for (let i = 1; i <= props.pagesCount; i++) {
             arr.push(i)
@@ -32,7 +33,9 @@ export const Paginator: React.FC<PaginatorPropsType> = (props) => {
                             return <span onClick={() => props.clickHandler(p)} key={i}
                                          className={s.num}>{p}</span>
                         }
-                    } else {return null}
+                    } else {
+                        return null
+                    }
                 })}
             </div>
         )
@@ -42,12 +45,16 @@ export const Paginator: React.FC<PaginatorPropsType> = (props) => {
             <Line/>
             <div className={s.btns}>
                 <div className={s.startButtons}>
-                    {(currentPaginatorBlock !== 0) && <button onClick={() => setCurrentPaginatorBlock(0)}>to start</button>}
-                    {(currentPaginatorBlock !== 0) && <button onClick={() => setCurrentPaginatorBlock(currentPaginatorBlock - 1)}>back</button>}
+                    {(currentPaginatorBlock !== 0) &&
+                    <button onClick={() => setCurrentPaginatorBlock(0)}>to start</button>}
+                    {(currentPaginatorBlock !== 0) &&
+                    <button onClick={() => setCurrentPaginatorBlock(currentPaginatorBlock - 1)}>back</button>}
                 </div>
                 <div className={s.endButtons}>
-                    {(currentPaginatorBlock !== lastPagBlock - 1) && <button onClick={() => setCurrentPaginatorBlock(currentPaginatorBlock + 1)}>next</button>}
-                    {(currentPaginatorBlock !== lastPagBlock - 1) && <button onClick={() => setCurrentPaginatorBlock(lastPagBlock - 1)}>to end</button>}
+                    {(currentPaginatorBlock !== lastPagBlock - 1) &&
+                    <button onClick={() => setCurrentPaginatorBlock(currentPaginatorBlock + 1)}>next</button>}
+                    {(currentPaginatorBlock !== lastPagBlock - 1) &&
+                    <button onClick={() => setCurrentPaginatorBlock(lastPagBlock - 1)}>to end</button>}
                 </div>
             </div>
         </div>

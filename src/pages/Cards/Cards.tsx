@@ -12,20 +12,11 @@ export const Cards = () => {
 
     const dispatch = useDispatch()
     const cards = useSelector<AppRootStateType, Array<CardType>>(state => state.cards.cards)
+    const userId = useSelector<AppRootStateType, string | undefined>(state => state.auth.userData?._id)
     const cardsState = useSelector<AppRootStateType, InitialStateType>(state => state.cards)
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
     const {id} = useParams<{ id?: string }>()
     const [rend, setRend] = useState<number>(0)
-
-    if (statusApp !=="loading" && rend !== 1) {
-        setRend(1)
-    }
-
-    useEffect(() => {
-        if (id && statusApp !=="loading") {
-            dispatch(getCardsTC({cardsPack_id: id}))
-        }
-    }, [rend, dispatch])
 
     const addCard = () => {
         if (id) {
@@ -41,8 +32,24 @@ export const Cards = () => {
         }
     }
 
+    if (statusApp !== "loading" && rend !== 1) {
+        setRend(1)
+    }
+
+    useEffect(() => {
+        if (id && statusApp !== "loading") {
+            dispatch(getCardsTC({cardsPack_id: id, pageCount: cardsState.pageCount}))
+        }
+    }, [rend])
+
     return (<div>
-            <Paginator clickHandler={(n:number)=>dispatch(getCardsTC({page:n, cardsPack_id: id} as any))} paginatorSize={10} pagesCount={Math.ceil(cardsState.cardsTotalCount/cardsState.pageCount)} currentPage={cardsState.page}/>
+            <Paginator clickHandler={(n: number) => dispatch(getCardsTC({
+                page: n,
+                cardsPack_id: id,
+                pageCount: cardsState.pageCount
+            } as any))}
+                       paginatorSize={10} pagesCount={Math.ceil(cardsState.cardsTotalCount / cardsState.pageCount)}
+                       currentPage={cardsState.page}/>
             <div className={s.cardsHeader}>
                 <div>Question</div>
                 <div>Answer</div>
@@ -50,7 +57,8 @@ export const Cards = () => {
                 <div>Created</div>
                 <div>Updated</div>
                 <div>
-                    <button style={{margin: "10px"}} onClick={addCard}>Add</button>
+                    <button disabled={userId !== cardsState.packUserId} style={{margin: "10px"}} onClick={addCard}>Add
+                    </button>
                 </div>
             </div>
             {cards.map(c => <div key={c._id} className={s.cards}>
@@ -60,8 +68,12 @@ export const Cards = () => {
                 <div style={{width: "250px"}}>{c.created}</div>
                 <div style={{width: "250px"}}>{c.updated}</div>
                 <div className={s.buttons}>
-                    <button style={{margin: "10px"}} onClick={() => deleteCard(c._id, c.cardsPack_id)}>Delete</button>
-                    <button style={{margin: "10px"}} onClick={() => updateCard(c._id)}>Update</button>
+                    <button disabled={userId !== cardsState.packUserId} style={{margin: "10px"}}
+                            onClick={() => deleteCard(c._id, c.cardsPack_id)}>Delete
+                    </button>
+                    <button disabled={userId !== cardsState.packUserId} style={{margin: "10px"}}
+                            onClick={() => updateCard(c._id)}>Update
+                    </button>
                 </div>
             </div>)}
         </div>

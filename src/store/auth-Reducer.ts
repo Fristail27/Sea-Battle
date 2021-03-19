@@ -14,19 +14,19 @@ const AUTH_TRY = "auth/AUTH_TRY"
 const LOGOUT = "auth/LOGOUT"
 
 export type UserDataType = {
-    _id: string | null
-    email: string | null
-    name: string | null
-    avatar?: string | null
-    publicCardPacksCount: number | null
-    created: Date | null
-    updated: Date | null
-    isAdmin: boolean | null
-    verified: boolean | null
-    rememberMe: boolean | null
-    error?: string | null
+    _id: string
+    email: string
+    name: string
+    avatar?: string
+    publicCardPacksCount: number
+    created: Date
+    updated: Date
+    isAdmin: boolean
+    verified: boolean
+    rememberMe: boolean
+    error?: string
     isAuth: boolean
-} | null
+}
 
 type InitialStateType = {
     userData: UserDataType | null,
@@ -34,10 +34,10 @@ type InitialStateType = {
     loginSuccess: boolean,
 }
 
-type ActionsType = authTryACType |SetErrorActionType | logoutACType
+type ActionsType = authTryACType | SetErrorActionType | logoutACType
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
-    switch(action.type) {
+    switch (action.type) {
         case AUTH_TRY:
             return {
                 ...state,
@@ -60,29 +60,32 @@ type authTryACType = {
     userData: UserDataType
     isAuth: boolean
 }
-export const authTryAC = (userData: UserDataType, isAuth: boolean): authTryACType => ({type: AUTH_TRY, userData, isAuth})
+export const authTryAC = (userData: UserDataType, isAuth: boolean): authTryACType => ({
+    type: AUTH_TRY,
+    userData,
+    isAuth
+})
 
 type logoutACType = {
     type: typeof LOGOUT
 }
-export const logoutAC = ():logoutACType => ({type: LOGOUT})
+export const logoutAC = (): logoutACType => ({type: LOGOUT})
 
 export const authenticationUserLoginTC = (data: userRequestData) =>
-    (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType | SetErrorActionType>)=> {
-        dispatch(onChangeAppStatusAC("loading"))
-        authAPI.userAuthorization(data)
-            .then((res) => {
-                if(res.data && !res.data.error) {
-                    dispatch(authTryAC(res.data, true))
-                    dispatch(onChangeAppStatusAC("succeeded"))
-                }else {
-                    dispatch(authTryAC(initialState.userData as any, false))
-                    dispatch(onChangeAppStatusAC("failed"))
-                }
-            })
-            .catch((err) => {
-                errHandlerInTC(dispatch, err, onChangeAppStatusAC, setErrorAC)
-            })
+    async (dispatch: Dispatch<ActionsType | OnChangeAppStatusActionType | SetErrorActionType>) => {
+        try {
+            dispatch(onChangeAppStatusAC("loading"))
+            const res = await authAPI.userAuthorization(data)
+            if (res.data && !res.data.error) {
+                dispatch(authTryAC(res.data, true))
+                dispatch(onChangeAppStatusAC("succeeded"))
+            } else {
+                dispatch(authTryAC(initialState.userData as any, false))
+                dispatch(onChangeAppStatusAC("failed"))
+            }
+        } catch (err) {
+            errHandlerInTC(dispatch, err, onChangeAppStatusAC, setErrorAC)
+        }
     }
 
 export const meRequestTC = () => async (dispatch: Dispatch<OnChangeAppStatusActionType | authTryACType>) => {
@@ -91,7 +94,7 @@ export const meRequestTC = () => async (dispatch: Dispatch<OnChangeAppStatusActi
         const res = await authAPI.meRequest()
         dispatch(authTryAC(res.data, true))
         dispatch(onChangeAppStatusAC("idle"))
-    }   catch (err) {
+    } catch (err) {
         errHandlerInTC(dispatch, err, onChangeAppStatusAC)
     }
 };
