@@ -65,7 +65,8 @@ export const Packs = () => {
                     <button disabled={userId !== cp.user_id} style={{margin: "10px"}}
                             onClick={() => updatePack({_id: cp._id, name: "Extra new"})}>update
                     </button>
-                    <NavLink to={`/cards/${cp._id}`} style={{margin: "10px"}}>cards</NavLink>
+                    <NavLink to={`/cards/${cp._id}`} style={{margin: "10px"}}>Cards</NavLink>
+                    <NavLink to={`/learn-cards/${cp._id}`} style={{margin: "10px"}}>Learn Cards</NavLink>
                 </div>
             </div>)}
 

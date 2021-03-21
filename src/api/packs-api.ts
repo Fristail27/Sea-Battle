@@ -1,4 +1,4 @@
-import axios from "axios"
+import {instance} from "./authApi";
 
 export type getCardPackParamsType = {
     packName?: string,
@@ -34,11 +34,6 @@ export type getCardPackResponseType = {
     page: number
     pageCount: number
 }
-
-const instance = axios.create({
-    baseURL: "https://neko-back.herokuapp.com/2.0/",
-    withCredentials: true
-})
 
 export const packsAPI = {
     getCardPacks (data?: getCardPackParamsType) {

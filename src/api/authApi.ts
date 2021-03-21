@@ -1,19 +1,15 @@
 import axios from 'axios'
 import {UserDataType} from "../store/auth-Reducer";
 
-const settings = {
-    withCredentials: true
-}
-
 export type userRequestData = {
     email: string
     password: string
     rememberMe: boolean
 }
 
-let instance = axios.create({
+export const instance = axios.create({
     baseURL: "https://neko-back.herokuapp.com/2.0/",
-    ...settings
+    withCredentials: true
 })
 
 export const authAPI = {

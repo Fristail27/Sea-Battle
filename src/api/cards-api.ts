@@ -1,4 +1,4 @@
-import axios from "axios";
+import {instance} from "./authApi";
 
 export type GetCardsParamsType = {
     cardAnswer?: string
@@ -48,11 +48,19 @@ export type GetCardsResponseType = {
     pageCount: number
     packUserId: string
 }
+export type GradeType = 1|2|3|4|5
+type updatedGradeType = {
+    _id: string
+    cardsPack_id: string
+    card_id: string
+    user_id: string
+    grade: GradeType
+    shots: number
+}
+type GradeCardResponseType = {
+    updatedGrade: updatedGradeType
+}
 
-const instance = axios.create({
-    baseURL: "https://neko-back.herokuapp.com/2.0/",
-    withCredentials: true
-})
 
 export const cardsAPI = {
     getCards (data: GetCardsParamsType) {
@@ -66,5 +74,8 @@ export const cardsAPI = {
     },
     updateCard (data: UpdateCardDataType) {
         return instance.put(`cards/card`, {card: data})
+    },
+    gradeCard (grade: GradeType, card_id: string) {
+        return instance.put<GradeCardResponseType>(`cards/grade`, {grade, card_id})
     }
 }
