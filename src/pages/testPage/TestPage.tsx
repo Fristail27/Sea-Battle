@@ -13,6 +13,7 @@ const TestPage = () => {
             <SuperButton children={"TEST"} />
             <SuperCheckbox children={"TEST"}/>
             <Preloader/>
+            <ModalError/>
         </>
     )
 }

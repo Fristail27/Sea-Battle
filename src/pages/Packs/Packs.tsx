@@ -4,9 +4,9 @@ import {CardPackType, UpdatePackDataType} from "../../api/packs-api";
 import s from "./Packs.module.css"
 import React, {useEffect, useState} from "react";
 import {addPackTC, delPackTC, getPacksTC, setFilterPacksAC, updPackTC} from "../../store/packs-Reducer";
-import {NavLink} from "react-router-dom";
 import {PanelForPacks} from "../../common/panelForPacks/PanelForPacks";
 import {RequestStatusType} from "../../store/app-Reducer";
+import {Pack} from "../../common/pack/Pack";
 
 
 export const Packs = () => {
@@ -53,23 +53,8 @@ export const Packs = () => {
                     <button style={{margin: "10px"}} onClick={addPack}>add</button>
                 </div>
             </div>
-            {cardPacks.map((cp) => <div key={cp._id} className={s.packs}>
-                <div style={{width: "300px"}}>{cp.name}</div>
-                <div style={{width: "300px"}}>{cp.cardsCount}</div>
-                <div style={{width: "300px"}}>{cp.created}</div>
-                <div style={{width: "300px"}}>{cp.updated}</div>
-                <div className={s.buttons}>
-                    <button disabled={userId !== cp.user_id} style={{margin: "10px"}}
-                            onClick={() => delPack(cp._id)}>delete
-                    </button>
-                    <button disabled={userId !== cp.user_id} style={{margin: "10px"}}
-                            onClick={() => updatePack({_id: cp._id, name: "Extra new"})}>update
-                    </button>
-                    <NavLink to={`/cards/${cp._id}`} style={{margin: "10px"}}>Cards</NavLink>
-                    <NavLink to={`/learn-cards/${cp._id}`} style={{margin: "10px"}}>Learn Cards</NavLink>
-                </div>
-            </div>)}
-
+            {cardPacks.map((cp) => <Pack key={cp._id} disabled={userId !== cp.user_id} cp={cp} delPack={delPack}
+                                         updatePack={updatePack}/>)}
         </div>
     )
 }

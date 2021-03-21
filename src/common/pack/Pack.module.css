@@ -1,0 +1,16 @@
+.pack {
+    display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid;
+    border-radius: 10px;
+}
+
+.text {
+    width: 300px;
+}
+.name {
+    width: 300px;
+    font-weight: bolder;
+}
