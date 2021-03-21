@@ -1,5 +1,6 @@
 .registrationModule {
-
+    display: inline-block;
+    width: 500px;
 }
 
 .registrationForm {
@@ -11,9 +12,16 @@
 .registrationForm input {
     margin-top: 20px;
 }
+
+.error {
+    color: red;
+    position: absolute
+}
+
 .registrationForm button {
     margin-top: 20px;
 }
+
 .registrationForm a {
     margin-top: 20px;
 }

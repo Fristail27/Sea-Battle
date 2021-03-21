@@ -30,8 +30,10 @@ export const EmailInput: React.FC<EmailInputPropsType> = ({email, onChange}) => 
 
     return (
         <div>
-            <input className={emailErr && s.error} onFocus={() => setEmailErr('')} value={email}
-                   onBlur={onBlurEmail} onChange={onMailChangeHandler} placeholder="Email" type={"email"}/>
+            <div>
+                <input className={emailErr && s.error} onFocus={() => setEmailErr('')} value={email}
+                       onBlur={onBlurEmail} onChange={onMailChangeHandler} placeholder="Email" type={"email"}/>
+            </div>
             {emailErr && <div className={s.inputErr} style={{marginTop: "-3px"}}>{emailErr}</div>}
         </div>
     )

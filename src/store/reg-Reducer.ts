@@ -25,7 +25,7 @@ export const regReducer = (state: InitialStateType = initialState, action: Actio
     }
 }
 
-const registerAC = (succeedRegister: boolean) => {
+export const registerAC = (succeedRegister: boolean) => {
     return {
         type: SET_REGISTER,
         succeedRegister

@@ -29,8 +29,10 @@ export const PassInput: React.FC<PassInputPropsType> = ({password, onChange}) =>
 
     return (
         <div>
-            <input className={passwordErr && s.error} onFocus={() => setPasswordErr('')} value={password}
-                   onBlur={onBlurPass} onChange={onPassChangeHandler} placeholder="Password" type={"password"}/>
+            <div>
+                <input className={passwordErr && s.error} onFocus={() => setPasswordErr('')} value={password}
+                       onBlur={onBlurPass} onChange={onPassChangeHandler} placeholder="Password" type={"password"}/>
+            </div>
             {passwordErr && <div className={s.inputErr} style={{marginTop: "-3px"}}>{passwordErr}</div>}
         </div>
     )
