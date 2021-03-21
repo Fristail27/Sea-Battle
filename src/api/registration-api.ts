@@ -1,4 +1,4 @@
-import axios from "axios"
+import {instance} from "./authApi";
 
 export type DataType = {
     email: string
@@ -8,10 +8,6 @@ type RegisterResponseType = {
     addedUser: {}
     error?: string
 }
-
-const instance = axios.create({
-    baseURL: "https://neko-back.herokuapp.com/2.0/"
-})
 
 export const regAPI = {
     register(data: DataType) {

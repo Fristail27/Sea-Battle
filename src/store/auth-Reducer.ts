@@ -34,7 +34,7 @@ type InitialStateType = {
     loginSuccess: boolean,
 }
 
-type ActionsType = authTryACType | SetErrorActionType | logoutACType
+type ActionsType = authTryACType | logoutACType
 
 export const authReducer = (state: InitialStateType = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {

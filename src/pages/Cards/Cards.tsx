@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
 import {CardType} from "../../api/cards-api";
 import React, {useEffect, useState} from "react";
-import {useParams} from "react-router-dom";
+import {NavLink, useParams} from "react-router-dom";
 import {addCardTC, delCardTC, getCardsTC, InitialStateType, updCardTC} from "../../store/cards-Reducer";
 import {Paginator} from "../../common/paginator/Paginator";
 import {RequestStatusType} from "../../store/app-Reducer";
@@ -28,7 +28,7 @@ export const Cards = () => {
     }
     const updateCard = (cardId: string) => {
         if (id) {
-            dispatch(updCardTC(id, {_id: cardId, comments: "new ans", question: "new que"}))
+            dispatch(updCardTC(id, {_id: cardId, comments: "new comment", question: "new que"}))
         }
     }
 

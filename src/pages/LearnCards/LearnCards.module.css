@@ -1,0 +1,10 @@
+.learnCards {
+    margin-top: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.answer {
+    display: flex;
+    justify-content: center;
+}

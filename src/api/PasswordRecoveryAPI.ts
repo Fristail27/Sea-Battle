@@ -1,15 +1,5 @@
-import axios from "axios";
+import {instance} from "./authApi";
 
-const baseURL = "https://neko-back.herokuapp.com/2.0/"
-// const baseURLForLocal = "http://localhost:7542/2.0/"
-const instance = axios.create({
-    withCredentials: true,
-    baseURL: baseURL,
-})
-// const instanceLoc = axios.create({
-//     withCredentials: true,
-//     baseURL: baseURLForLocal,
-// })
 export const passwordRecoveryAPI = {
     sendEmailForChangePassword(mail: string) {
         return instance.post('auth/forgot', {

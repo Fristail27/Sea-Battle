@@ -1,26 +1,34 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import {NavLink, Redirect} from "react-router-dom";
 import s from "./Registration.module.css"
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootStateType} from "../../store/store";
-import {registerTC} from "../../store/reg-Reducer";
-import {Preloader} from "../../common/preloader/Preloader";
+import {registerAC, registerTC} from "../../store/reg-Reducer";
 import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
 import {EmailInput} from "../../common/EmailInput";
 import {PassInput} from "../../common/PassInput";
 import {Button} from "../../common/Button";
 import {validations} from "../../utils/validations/validations";
+import {ModalError} from "../../common/modalWindow/modalError";
 
 const Registration = () => {
 
     const dispatch = useDispatch()
     const succeedRegister = useSelector<AppRootStateType, boolean>(state => state.reg.succeedRegister)
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
-    const error = useSelector<AppRootStateType, string | undefined>(state => state.reg.error)
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [repeatPassword, setRepeatPassword] = useState<string>("")
     const [sendError, setSendError] = useState<string>("")
+
+    useEffect(() => {
+        if (succeedRegister) {
+            setTimeout(() => dispatch(registerAC(false)), 1000)
+        }
+        if (sendError) {
+            setTimeout(() => setSendError(""), 3000)
+        }
+    }, [succeedRegister, sendError])
 
     const onRepeatPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRepeatPassword(e.currentTarget.value)
@@ -50,13 +58,14 @@ const Registration = () => {
             <form className={s.registrationForm} onSubmit={(e) => e.preventDefault()}>
                 <EmailInput email={email} onChange={setEmail}/>
                 <PassInput password={password} onChange={setPassword}/>
-                <input value={repeatPassword} onChange={onRepeatPassChangeHandler}
-                       placeholder="Repeat password" type={"password"}/>
-                {password !== repeatPassword ? <div style={{color:"red"}}>Different Password</div> : ""}
+                <div>
+                    <input value={repeatPassword} onChange={onRepeatPassChangeHandler}
+                           placeholder="Repeat password" type={"password"}/>
+                    {password !== repeatPassword ? <div className={s.error}>Different Password</div> : ""}
+                </div>
                 <Button name={"Register"} onClick={onButtonClick} status={statusApp}/>
-                {sendError && <div style={{color:"red"}} >{sendError}</div>}
-                {error && <div style={{color:"red"}}>{error}</div>}
-                {statusApp ==="loading" && <Preloader/>}
+                {sendError && <div style={{marginTop:"165px"}} className={s.error}>{sendError}</div>}
+                <ModalError/>
                 <NavLink to={"/login"}>Sign in</NavLink>
             </form>
         </div>

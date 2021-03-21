@@ -14,6 +14,7 @@ import {useDispatch} from "react-redux";
 import {meRequestTC} from "./store/auth-Reducer";
 import {Packs} from "./pages/Packs/Packs";
 import {Cards} from "./pages/Cards/Cards";
+import {LearnCards} from "./pages/LearnCards/LearnCards";
 
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         <Route path={'/error404'} render={ () => <Error404/> }/>
         <Route path={'/packs'} render={ () => <Packs/> }/>
         <Route path={'/cards/:id?'} render={ () => <Cards/> }/>
+        <Route path={'/learn-cards/:id'} render={ () => <LearnCards/> }/>
         <Redirect from={ '*' } to={'/error404'}/>
       </Switch>
     </div>

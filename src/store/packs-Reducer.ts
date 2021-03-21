@@ -18,7 +18,7 @@ export const initialState = {
     maxCardsCount: 1000,
     minCardsCount: 0,
     page: 1,
-    pageCount: 10,
+    pageCount: 15,
     searchValue: "",
     sortPacks: "0updated"
 }
