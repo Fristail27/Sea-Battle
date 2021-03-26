@@ -1,7 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI, userRequestData} from "../api/authApi";
-import {onChangeAppStatusAC, OnChangeAppStatusActionType} from "./app-Reducer";
-import {setErrorAC, SetErrorActionType} from "./reg-Reducer";
+import {onChangeAppStatusAC, OnChangeAppStatusActionType, setErrorAC, SetErrorActionType} from "./app-Reducer";
 import {errHandlerInTC} from "../utils/validations/errHandler";
 
 export const initialState: InitialStateType = {

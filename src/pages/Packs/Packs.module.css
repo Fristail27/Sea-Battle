@@ -1,7 +1,12 @@
 .packsHeader {
-    margin-top: 20px;
-    border: 1px solid;
     display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: #2a2e73;
+    color: white;
 }
 .packsHeader div {
     width: 300px;

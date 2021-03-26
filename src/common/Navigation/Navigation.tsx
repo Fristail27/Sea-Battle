@@ -8,28 +8,39 @@ import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
 import {PreloaderForNav} from "../preloaderForNav/PreloaderForNav";
 
 export const Navigations = () => {
+
     const dispatch = useDispatch()
-    const authorized = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
-    const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
+    const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
+    const appStatus = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
+
     const authHandler = () => {
-        if (authorized) {
+        if (isAuth) {
             dispatch(logoutTC())
             dispatch(onChangeAppStatusAC("idle"))
         }
     }
-    const text = authorized ? "/" : "/login"
+    const text = isAuth ? "/profile" : "/login"
+
     return (
         <div className={styles.container}>
             <div className={styles.wrapper}>
                 <nav className={styles.navigation}>
-                    <Link to={"/"}>Home</Link>
-                    <Link to={"/profile"}>Profile</Link>
+                    {/*<Link to={"/"}>Home</Link>*/}
+                    <Link to={"/"}>Profile</Link>
+                    <Link to={'/login'}>Login</Link>
+                    <Link to={'/registration'}>Registration</Link>
+                    {/*<Link to={'/new-password-page'}>New password</Link>*/}
+                    <Link to={'/password-recovery-page'}>Password recovery</Link>
+                    <Link to={'/test-page'}>Test page</Link>
+                    {/*<Link to={'/error404'}>Error 404</Link>*/}
+                    <Link to={'/packs'}>Packs</Link>
+                    <Link to={'/cards'}>Cards</Link>
                 </nav>
                 <NavLink to={text}>
-                    <button onClick={authHandler}>{authorized ? <span>Logout</span> : <span>Login</span>}</button>
+                    <button onClick={authHandler}>{isAuth ? "Logout" : "Login"}</button>
                 </NavLink>
             </div>
-            {statusApp ==="loading" && <PreloaderForNav/>}
+            {appStatus ==="loading" && <PreloaderForNav/>}
         </div>
     )
 }

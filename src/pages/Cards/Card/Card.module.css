@@ -1,4 +1,4 @@
-.pack {
+.card {
     display: flex;
     align-items: center;
     margin: 5px;
@@ -10,7 +10,7 @@
 .text {
     width: 300px;
 }
-.name {
+
+.buttons {
     width: 300px;
-    font-weight: bolder;
 }

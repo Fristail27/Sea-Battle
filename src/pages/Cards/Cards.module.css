@@ -1,10 +1,15 @@
 .cardsHeader {
-    margin-top: 20px;
-    border: 1px solid;
     display: flex;
+    align-items: center;
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid;
+    border-radius: 10px;
+    background-color: #2a2e73;
 }
 .cardsHeader div {
-    width: 250px;
+    width: 300px;
+    color: white;
 }
 
 .cards {

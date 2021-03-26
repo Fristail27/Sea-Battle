@@ -19,16 +19,16 @@ const Registration = () => {
     const [email, setEmail] = useState<string>("")
     const [password, setPassword] = useState<string>("")
     const [repeatPassword, setRepeatPassword] = useState<string>("")
-    const [sendError, setSendError] = useState<string>("")
+    const [error, setError] = useState<string>("")
 
     useEffect(() => {
         if (succeedRegister) {
             setTimeout(() => dispatch(registerAC(false)), 1000)
         }
-        if (sendError) {
-            setTimeout(() => setSendError(""), 3000)
+        if (error) {
+            setTimeout(() => setError(""), 3000)
         }
-    }, [succeedRegister, sendError])
+    }, [succeedRegister, error, dispatch])
 
     const onRepeatPassChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setRepeatPassword(e.currentTarget.value)
@@ -41,10 +41,10 @@ const Registration = () => {
             if (password === repeatPassword && !validations.emailValid(email)) {
                 dispatch(registerTC({email, password}))
             } else {
-                setSendError("incorrect email or password")
+                setError("incorrect email or password")
             }
         } else {
-            setSendError("required email and password")
+            setError("required email and password")
         }
     }
 
@@ -64,10 +64,10 @@ const Registration = () => {
                     {password !== repeatPassword ? <div className={s.error}>Different Password</div> : ""}
                 </div>
                 <Button name={"Register"} onClick={onButtonClick} status={statusApp}/>
-                {sendError && <div style={{marginTop:"165px"}} className={s.error}>{sendError}</div>}
-                <ModalError/>
+                {error && <div style={{marginTop:"165px"}} className={s.error}>{error}</div>}
                 <NavLink to={"/login"}>Sign in</NavLink>
             </form>
+            <ModalError/>
         </div>
     )
 }

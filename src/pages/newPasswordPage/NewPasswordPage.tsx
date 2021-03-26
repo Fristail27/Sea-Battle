@@ -3,16 +3,13 @@ import {useDispatch, useSelector} from "react-redux";
 import {Redirect, useParams} from "react-router-dom";
 import {AppRootStateType} from "../../store/store";
 import {
-    onChangeInputPassAC,
-    onChangeInputPassRecAC,
-    sendPassForNewPassTC,
-    setErrorStatusForNewPassAC
+    onChangeInputPassAC, onChangeInputPassRecAC, sendPassForNewPassTC, setErrorStatusForNewPassAC
 } from "../../store/passwordRecovery-Reducer";
 import {validations} from "../../utils/validations/validations";
 import {onChangeAppStatusAC} from "../../store/app-Reducer";
 import {Preloader} from "../../common/preloader/Preloader";
 
-const NewPasswordPage:React.FC = () => {
+const NewPasswordPage: React.FC = () => {
 
     const dispatch = useDispatch()
     const [redirect, setRedirect] = React.useState<boolean>(false)
@@ -97,11 +94,12 @@ const NewPasswordPage:React.FC = () => {
             <label style={{display: "block"}}><input onBlur={onBlurHandlerPassRepeat}
                                                      onFocus={() => setTouchedPassRepeat(true)}
                                                      style={errorStylePassRepeat} value={valuePassRepeat}
-                                                     onChange={onChangeHandlerPassRepeat} type="text"/>repeat Password</label>
+                                                     onChange={onChangeHandlerPassRepeat} type="text"/>repeat
+                Password</label>
             {errorStatus && <span style={{color: "red"}}>{errorStatus}</span>}
             <button disabled={statusApp === "loading"} onClick={clickHandler}>Change Pass</button>
-            {statusApp ==="loading" && <Preloader/>}
-            {statusApp === "succeeded" && <span style={{color:"green"}}>{statusApp}</span>}
+            {statusApp === "loading" && <Preloader/>}
+            {statusApp === "succeeded" && <span style={{color: "green"}}>{statusApp}</span>}
         </div>
     )
 }

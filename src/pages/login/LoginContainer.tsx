@@ -5,16 +5,17 @@ import {AppRootStateType} from "../../store/store";
 import {authenticationUserLoginTC} from "../../store/auth-Reducer";
 import { Redirect } from "react-router-dom";
 import {onChangeAppStatusAC, RequestStatusType} from "../../store/app-Reducer";
+import {validations} from "../../utils/validations/validations";
 
 export const LoginContainer = () => {
 
     const dispatch = useDispatch()
     const statusApp = useSelector<AppRootStateType, RequestStatusType>(state => state.app.appStatus)
-    const error = useSelector<AppRootStateType, string|undefined>(state => state.reg.error)
     const isAuth = useSelector<AppRootStateType, boolean>(state => state.auth.isAuth)
     let [email, setEmailText] = useState("")
     let [password, setPasswordText] = useState("")
     let [rememberMe, setRememberMe] = useState(false)
+    const [error, setError] = useState<string>("")
 
     const emailHandler = (email: string) =>{
         setEmailText(email)
@@ -35,8 +36,17 @@ export const LoginContainer = () => {
         }
     }
     const onSubmit = () => {
-        dispatch(authenticationUserLoginTC({email, password, rememberMe}))
+        if (email && password) {
+            if (!validations.emailValid(email)) {
+                dispatch(authenticationUserLoginTC({email, password, rememberMe}))
+            } else {
+                setError("incorrect email or password")
+            }
+        } else {
+            setError("required email and password")
+        }
     }
+
     if(isAuth) {
         return <Redirect to={"./profile"}/>
     }
