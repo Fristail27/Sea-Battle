@@ -2,6 +2,7 @@ import React from "react";
 import s from "./Card.module.css";
 import {InitialStateType} from "../../../store/cards-Reducer";
 
+
 type CardPropsType = {
     question: string
     answer: string
