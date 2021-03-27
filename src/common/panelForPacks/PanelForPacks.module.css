@@ -1,7 +1,7 @@
 .panel {
     margin: 4px 0;
     display:flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
 .search{
  margin: 0 20px;

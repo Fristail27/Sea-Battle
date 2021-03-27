@@ -75,6 +75,7 @@ export const getPacksTC = (data?: getCardPackParamsType) => async (dispatch: Dis
 }
 
 export const addPackTC = (data: AddPackDataType) => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    dispatch(onChangeAppStatusAC("loading"))
     const params = getState().packs
     await packsAPI.addPack(data)
     dispatch(getPacksTC({
@@ -83,6 +84,7 @@ export const addPackTC = (data: AddPackDataType) => async (dispatch: Dispatch<an
 }
 
 export const delPackTC = (id: string) => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    dispatch(onChangeAppStatusAC("loading"))
     const params = getState().packs
     await packsAPI.deletePack(id)
     dispatch(getPacksTC({

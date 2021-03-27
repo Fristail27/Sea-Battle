@@ -13,7 +13,7 @@ export const PanelForPacks = () => {
     const dispatch = useDispatch()
     const pack = useSelector<AppRootStateType, InitialStateType>(state => state.packs)
     const searchValue = useSelector<AppRootStateType, string>(state => state.packs.searchValue)
-    const pagesCount = Math.ceil(pack.cardPacksTotalCount / pack.pageCount)
+    // const pagesCount = Math.ceil(pack.cardPacksTotalCount / pack.pageCount)
     const [typeSelectValue, setTypeSelectValue] = useState<TypeSelectValue>("updated")
     const [orderSelectValue, setOrderSelectValue] = useState<OrderSelectValueType>("0")
 
@@ -51,10 +51,10 @@ export const PanelForPacks = () => {
                     dispatch(getPacksTC({sortPacks: `${orderSelectValue}${typeSelectValue}`}))
                 }}>Sort</button>
             </div>
-            <div className={s.paginator}>
-                <Paginator clickHandler={(p: number) => dispatch(getPacksTC({page: p, packName: searchValue}))}
-                           paginatorSize={10} currentPage={pack.page} pagesCount={pagesCount}/>
-            </div>
+            {/*<div className={s.paginator}>*/}
+            {/*    <Paginator clickHandler={(p: number) => dispatch(getPacksTC({page: p, packName: searchValue}))}*/}
+            {/*               paginatorSize={10} currentPage={pack.page} pagesCount={pagesCount}/>*/}
+            {/*</div>*/}
         </div>
     )
 }

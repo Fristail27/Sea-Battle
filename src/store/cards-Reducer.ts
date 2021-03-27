@@ -62,7 +62,7 @@ export const addCardTC = (data: AddCardDataType) => async (dispatch: Dispatch<an
         cardsPack_id: data.cardsPack_id, max: state.maxGrade, min: state.minGrade, page: state.page,
         pageCount: state.pageCount
     }))
-    dispatch(onChangeAppStatusAC("succeeded"))
+    // dispatch(onChangeAppStatusAC("succeeded"))
 }
 
 export const delCardTC = (cardId: string, packId: string) => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
@@ -72,7 +72,7 @@ export const delCardTC = (cardId: string, packId: string) => async (dispatch: Di
     dispatch(getCardsTC({
         cardsPack_id: packId, max: state.maxGrade, min: state.minGrade, page: state.page, pageCount: state.pageCount
     }))
-    dispatch(onChangeAppStatusAC("succeeded"))
+    // dispatch(onChangeAppStatusAC("succeeded"))
 }
 
 export const updCardTC = (packId: string, data: UpdateCardDataType) => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
@@ -82,7 +82,7 @@ export const updCardTC = (packId: string, data: UpdateCardDataType) => async (di
     dispatch(getCardsTC({
         cardsPack_id: packId, max: state.maxGrade, min: state.minGrade, page: state.page, pageCount: state.pageCount
     }))
-    dispatch(onChangeAppStatusAC("succeeded"))
+    // dispatch(onChangeAppStatusAC("succeeded"))
 }
 
 export const setCardGradeTC = (grade: GradeType, id: string) => async (dispatch: Dispatch<any>) => {
