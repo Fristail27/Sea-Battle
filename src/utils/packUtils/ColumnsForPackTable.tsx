@@ -9,7 +9,7 @@ export const packColumnsCreator = (
     cardsState: Array<CardPackType>,
     addPack: () => void,
     deletePack: (cardPackId: string) => void,
-    updateCard: (text: any) => void,
+    updateCard: (obj: any) => void,
     openModal: (modalObj:{modalStatus:boolean, currentPack_id:string|null}) => void
 ) => {
     let columns = [
@@ -49,7 +49,7 @@ export const packColumnsCreator = (
                             disabled={userId !== record.user_id}
                             onClick={() => deletePack(record.key)}
                         >Delete</Button>
-                        <Button icon={<Loading3QuartersOutlined/>} type="primary" onClick={() => updateCard(text)}
+                        <Button icon={<Loading3QuartersOutlined/>} type="primary" onClick={() => updateCard({_id: record.key, name: "Extra new"})}
                                 disabled={userId !== record.user_id}>Update
                         </Button>
                         <Button icon={<WindowsOutlined />} type="dashed"
