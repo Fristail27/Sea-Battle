@@ -27,8 +27,11 @@ export const Cards = () => {
     if (statusApp !== "loading" && rend !== 1) {
         setRend(1)
     }
+    console.log(id)
     useEffect(() => {
-            dispatch(getCardsTC({cardsPack_id: id as any, pageCount: cardsState.pageCount}))
+        if(isAuth && id) {
+            console.log(123)
+            dispatch(getCardsTC({cardsPack_id: id as any, pageCount: cardsState.pageCount}))}
     }, [dispatch, id, cardsState.pageCount])
 
     if (!isAuth) {
