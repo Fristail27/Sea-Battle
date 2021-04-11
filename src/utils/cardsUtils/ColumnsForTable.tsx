@@ -8,16 +8,25 @@ import {CardType} from "../../api/cards-api";
 export const columnsCreator = (
     userId: string | undefined,
     cardsState: InitialStateType,
-    addCard: () => void,
+    openAddCardModal: () => void,
     deleteCard: (text: any, cardPackId: string) => void,
-    updateCard: (text: any) => void
+    openUpdateCardModal: (id: string, question:string, initialComment:string) => void
 ) => {
     let columns = [
         {
             title: <h2>Question</h2>,
             dataIndex: 'question',
             key: 'question',
-            align: 'center' as const
+            align: 'center' as const,
+            render: (text:any, record:any)=> {
+                return (
+                    <div>
+                        <span>{text}</span>
+                        <br/>
+                        <span style={{fontSize:11, color:'gray'}}>{record.comments}</span>
+                    </div>
+                )
+            }
         },
         {
             title: <h2>Answer</h2>,
@@ -42,7 +51,7 @@ export const columnsCreator = (
         },
         {
             key: 'btnAdd',
-            title:  <Button type="primary" icon={<PlusCircleOutlined />} onClick={addCard}
+            title:  <Button type="primary" icon={<PlusCircleOutlined />} onClick={openAddCardModal}
                             disabled={userId !== cardsState.packUserId}
             >Add</Button>,
             dataIndex: 'btnAdd',
@@ -56,7 +65,7 @@ export const columnsCreator = (
             disabled={userId !== cardsState.packUserId}
             onClick={() => deleteCard(text,record.cardPackId)}
         >Delete</Button>
-    <Button icon={<Loading3QuartersOutlined />} type="primary" onClick={() => updateCard(text)}
+    <Button icon={<Loading3QuartersOutlined />} type="primary" onClick={() => openUpdateCardModal(text, record.question, record.comments)}
             disabled={userId !== cardsState.packUserId}
     >Update</Button>
     </span>
@@ -75,7 +84,8 @@ export const dataForTableCreator = (cards:Array<CardType>) => {
             grade: el.grade,
             updated: el.updated,
             btnAdd: el._id,
-            cardPackId:el.cardsPack_id
+            cardPackId:el.cardsPack_id,
+            comments:el.comments
         }
     })
 }

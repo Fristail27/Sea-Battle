@@ -38,6 +38,7 @@ export type CardType = {
     created: string
     updated: string
     _id: string
+    comments:string
 }
 export type GetCardsResponseType = {
     cards: Array<CardType>

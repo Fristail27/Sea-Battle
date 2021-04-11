@@ -16,7 +16,7 @@ export const LearnCards = () => {
     const [show, setShow] = useState(false)
     const [card, setCard] = useState<CardType>({
         answer: "", question: "", cardsPack_id: "", grade: 0, shots: 0,
-        user_id: "", created: "", updated: "", _id: ""
+        user_id: "", created: "", updated: "", _id: "", comments:""
     })
     const gradeArr: Array<GradeType> = [1, 2, 3, 4, 5]
     const dispatch = useDispatch()
