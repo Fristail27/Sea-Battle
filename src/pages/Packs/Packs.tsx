@@ -15,6 +15,13 @@ import 'antd/dist/antd.css';
 import {Table} from "antd";
 import {dataForPackTableCreator, packColumnsCreator} from "../../utils/packUtils/ColumnsForPackTable";
 import { Modal } from "../../common/modal/modal";
+import AddPackModalComponent from "./addPackModal/AddPackModal";
+import UpdatePackModalComponent from "./updatePackModal/UpdatePackModalContainer";
+
+type ModalStatusType = {
+    modalStatus: boolean
+    currentPack_id: string|null
+}
 
 export const Packs = () => {
     const dispatch = useDispatch()
@@ -24,16 +31,32 @@ export const Packs = () => {
     const cardPacks = useSelector<AppRootStateType, Array<CardPackType>>(state => state.packs.cardPacks)
     const cardPacksState = useSelector<AppRootStateType, InitialStateType>(state => state.packs)
     const [rend, setRend] = useState<number>(0)
-    const [modalStatus, setModalStatus] = useState<{modalStatus: boolean, currentPack_id: string|null}>({modalStatus:false, currentPack_id:null})
+    const [modalStatus, setModalStatus] = useState<ModalStatusType>({modalStatus:false, currentPack_id:null})
+    const [addPackModalStatus, setAddPackModalStatus] = useState<boolean>(false)
+    const [updatePackModalStatus, setUpdatePackModalStatus] = useState<boolean>(false)
+    const [updatePackId, setUpdatePackId] = useState<string>('')
+    const [inValForUpdate, setInValForUpdate] = useState<string>('')
 
-    const addPack = () => {
-        dispatch(addPackTC({name: "New Pack"}))
+    const addPack = (name:string) => {
+        dispatch(addPackTC({name}))
+    }
+    const openAddPackModal = () => {
+        setAddPackModalStatus(true)
+    }
+    const openUpdatePackModal = (id:string, oldPackName:string) => {
+        setInValForUpdate(oldPackName)
+        setUpdatePackId(id)
+        setUpdatePackModalStatus(true)
+
     }
     const delPack = (id: string) => {
         dispatch(delPackTC(id))
     }
-    const updatePack = (data: UpdatePackDataType) => {
-        dispatch(updPackTC(data))
+    const updatePack = (name: string) => {
+        dispatch(updPackTC({
+            _id: updatePackId,
+            name
+        }))
     }
 
     if (statusApp !== "loading" && rend !== 1) {
@@ -63,9 +86,16 @@ export const Packs = () => {
                     size={"small"}
                    loading={statusApp === "loading"}
                    bordered
-                   columns={packColumnsCreator(userId, cardPacks, addPack, delPack, updatePack, setModalStatus)}
+                   columns={packColumnsCreator(userId, cardPacks, openAddPackModal, delPack, openUpdatePackModal, setModalStatus)}
                    dataSource={dataForPackTableCreator(cardPacks)}
             />
+            {addPackModalStatus &&<AddPackModalComponent addPack={addPack} closeModal={()=>setAddPackModalStatus(false)} visible={addPackModalStatus}/>}
+            {updatePackModalStatus &&<UpdatePackModalComponent
+                updatePack={updatePack}
+                closeModal={()=>setUpdatePackModalStatus(false)}
+                visible={updatePackModalStatus}
+                initValue={inValForUpdate}
+            />}
             {modalStatus.modalStatus && <Modal currentId={modalStatus.currentPack_id} setModalStatus={setModalStatus}/>}
         </div>
     )

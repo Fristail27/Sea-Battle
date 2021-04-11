@@ -93,6 +93,7 @@ export const delPackTC = (id: string) => async (dispatch: Dispatch<any>, getStat
 }
 
 export const updPackTC = (data: UpdatePackDataType) => async (dispatch: Dispatch<any>, getState: () => AppRootStateType) => {
+    dispatch(onChangeAppStatusAC("loading"))
     const params = getState().packs
     await packsAPI.updatePack(data)
     dispatch(getPacksTC(

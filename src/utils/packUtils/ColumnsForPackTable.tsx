@@ -7,9 +7,9 @@ import {CardPackType} from "../../api/packs-api";
 export const packColumnsCreator = (
     userId: string | undefined,
     cardsState: Array<CardPackType>,
-    addPack: () => void,
+    openAddPackModal: () => void,
     deletePack: (cardPackId: string) => void,
-    updateCard: (obj: any) => void,
+    openUpdatePackModal: (id: string, name:string) => void,
     openModal: (modalObj:{modalStatus:boolean, currentPack_id:string|null}) => void
 ) => {
     let columns = [
@@ -36,7 +36,7 @@ export const packColumnsCreator = (
         },
         {
             key: 'btnAdd',
-            title: <Button type="primary" icon={<PlusCircleOutlined/>} onClick={addPack} disabled={!userId}>Add</Button>,
+            title: <Button type="primary" icon={<PlusCircleOutlined/>} onClick={openAddPackModal} disabled={!userId}>Add</Button>,
             dataIndex: 'btnAdd',
             align: 'center' as const,
             render: (text: any, record: any) => {
@@ -49,7 +49,7 @@ export const packColumnsCreator = (
                             disabled={userId !== record.user_id}
                             onClick={() => deletePack(record.key)}
                         >Delete</Button>
-                        <Button icon={<Loading3QuartersOutlined/>} type="primary" onClick={() => updateCard({_id: record.key, name: "Extra new"})}
+                        <Button icon={<Loading3QuartersOutlined/>} type="primary" onClick={() => openUpdatePackModal(record.key, record.packName)}
                                 disabled={userId !== record.user_id}>Update
                         </Button>
                         <Button icon={<WindowsOutlined />} type="dashed"
@@ -73,4 +73,52 @@ export const dataForPackTableCreator = (cardPacks:Array<CardPackType>) => {
             user_id: el.user_id,
         }
     })
+}
+
+const obj = {
+    "Id": "Id1",
+    "IsSkipped": "true",
+    "Order": "1",
+    "MaterialLoad": [ {
+        "Id": "Id1",
+        "Channels": {
+            "PointLabel": "PointLabel1",
+            "Channel": {
+                "Id": "Id1",
+                "Label": "Label1"
+            }
+        },
+        "Material": {
+            "Id": "Id1",
+            "Label": "Label1"
+        },
+        "Uom": {
+            "Id": "Id1",
+            "Label": "Label1"
+        }
+    }
+    ],
+    "MaterialUnload": [ {
+        "Id": "Id1",
+        "Channels": {
+            "PointLabel": "PointLabel4",
+            "Channel": {
+                "Id": "Id4",
+                "Label": "Label4"
+            }
+        },
+        "Material": {
+            "Id": "Id4",
+            "Label": "Label4"
+        },
+        "Uom": {
+            "Id": "Id4",
+            "Label": "Label4"
+        }
+    }
+    ],
+    "Stage": {
+        "Id": "Id1",
+        "Label": "Label1"
+    }
 }
