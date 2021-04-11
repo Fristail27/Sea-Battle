@@ -17,13 +17,19 @@ export const packColumnsCreator = (
             title: <h2>Pack Name</h2>,
             dataIndex: 'packName',
             key: 'packName',
-            align: 'center' as const
+            align: 'center' as const,
+            sorter: (a:any, b:any) => {
+                if(a.packName > b.packName) {return 1} else return -1
+            },
         },
         {
             title: <h2>Count</h2>,
             dataIndex: 'cardsCount',
             key: 'cardsCount',
-            align: 'center' as const
+            align: 'center' as const,
+            sorter: (a:any, b:any) => {
+                if(a.cardsCount > b.cardsCount) {return 1} else return -1
+            },
         },
         {
             title: <h2>Updated</h2>,
@@ -32,7 +38,10 @@ export const packColumnsCreator = (
             align: 'center' as const,
             render: (text:string)=>{
                 return moment(text).calendar();
-            }
+            },
+            sorter: (a:any, b:any) => {
+                if(a.updated > b.updated) {return 1} else return -1
+            },
         },
         {
             key: 'btnAdd',
