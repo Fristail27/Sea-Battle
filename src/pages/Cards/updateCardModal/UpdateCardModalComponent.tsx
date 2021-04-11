@@ -19,14 +19,14 @@ const UpdateCardModalComponent:React.FC<UpdateCardModalComponentType> = ({update
     }
 
     return (
-        <Modal title="Basic Modal" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
+        <Modal title="Update Card" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
             <span>Введите вопрос</span>
             <div style={{width:'200px'}}>
-                <Input value={inputQuestion} onChange={(e)=>setInputQuestion(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputQuestion} onChange={(e)=>setInputQuestion(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
             <span>Введите комментарий</span>
             <div style={{width:'200px'}}>
-                <Input value={inputComment} onChange={(e)=>setInputComment(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputComment} onChange={(e)=>setInputComment(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
         </Modal>
     )

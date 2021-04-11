@@ -16,10 +16,10 @@ const AddPackModalComponent:React.FC<AddPackModalComponentType> = ({addPack, vis
     }
 
     return (
-        <Modal title="Basic Modal" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
+        <Modal title="Add pack" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
             <span>Введите название</span>
             <div style={{width:'200px'}}>
-                <Input value={inputValue} onChange={(e)=>setInputValue(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputValue} onChange={(e)=>setInputValue(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
         </Modal>
     )

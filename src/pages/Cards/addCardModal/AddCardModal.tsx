@@ -20,11 +20,11 @@ const AddCardModalComponent:React.FC<AddCardModalComponentType> = ({addCard, vis
         <Modal title="Add card" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
             <span>Введите вопрос</span>
             <div style={{width:'200px'}}>
-                <Input value={inputQueValue} onChange={(e)=>setInputQueValue(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputQueValue} onChange={(e)=>setInputQueValue(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
             <span>Введите ответ</span>
             <div style={{width:'200px'}}>
-                <Input value={inputAnsValue} onChange={(e)=>setInputAnsValue(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputAnsValue} onChange={(e)=>setInputAnsValue(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
         </Modal>
     )

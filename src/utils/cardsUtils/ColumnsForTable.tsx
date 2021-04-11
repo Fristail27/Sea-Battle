@@ -38,13 +38,19 @@ export const columnsCreator = (
             title: <h2>Grade</h2>,
             dataIndex: 'grade',
             key: 'grade',
-            align: 'center' as const
+            align: 'center' as const,
+            sorter: (a:any, b:any) => {
+                if(a.grade > b.grade) {return 1} else return -1
+            },
         },
         {
             title: <h2>Updated</h2>,
             key: 'updated',
             dataIndex: 'updated',
             align: 'center' as const,
+            sorter: (a:any, b:any) => {
+                if(a.updated > b.updated) {return 1} else return -1
+            },
             render: (text:string)=>{
                 return moment(text).calendar();
             }

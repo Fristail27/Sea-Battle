@@ -17,10 +17,10 @@ const UpdatePackModalComponent:React.FC<UpdatePackModalComponentType> = ({update
     }
 
     return (
-        <Modal title="Basic Modal" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
+        <Modal title="Update pack" visible={visible} onOk={onOkHandler} onCancel={closeModal}>
             <span>Введите название</span>
             <div style={{width:'200px'}}>
-                <Input value={inputValue} onChange={(e)=>setInputValue(e.currentTarget.value)} allowClear={true} size={"small"}/>
+                <Input value={inputValue} onChange={(e)=>setInputValue(e.currentTarget.value)} allowClear={true} size={"middle"}/>
             </div>
         </Modal>
     )
